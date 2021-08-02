@@ -22,9 +22,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue } from 'vue-property-decorator'
 
-@Component
 export default class DefaultLayoutComponent extends Vue {
   appName : string = 'Portfolio'
   protected get getAppName () : string { return this.appName }
