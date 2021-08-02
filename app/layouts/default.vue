@@ -26,7 +26,7 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class DefaultLayoutComponent extends Vue {
-  private appName : string = 'Portfolio'
+  appName : string = 'Portfolio'
   protected get getAppName () : string { return this.appName }
 }
 </script>
