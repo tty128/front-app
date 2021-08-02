@@ -1,7 +1,7 @@
 <template>
   <div class="top-page flex--c flex--dc">
     <div>ここはポートフォリオのページ</div>
-    <p>aaaaaa</p>
+    <p>{{ getAppName }}</p>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
-export default class YourComponent extends Vue {
+export default class RootPageComponent extends Vue {
   @Prop({ type: String, default: 'App' }) readonly appName ! : string;
 
   protected get getAppName (): string { return this.appName }
