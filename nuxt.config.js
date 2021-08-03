@@ -52,13 +52,13 @@ export default {
 
   proxy: {
     '/api/': {
-      target: 'http://localhost:8000/api',
+      target: 'https://kbystty-portfolio-back.herokuapp.com/api',
       pathRewrite: {
         '^/api/': '/'
       }
     }
   },
-  
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
