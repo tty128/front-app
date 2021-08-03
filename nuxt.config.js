@@ -2,9 +2,12 @@ export default {
   srcDir: 'app/',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'front-app',
+    title: '',
+    titleTemplate(title) {
+      return (title ? `${title} | ` : '') + 'AppName'
+    },
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ja-JP'
     },
     meta: [
       { charset: 'utf-8' },
@@ -19,6 +22,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    { src: '~/assets/sass/app.scss', lang: 'scss' }
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -37,12 +41,24 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    proxy: true
+  },
 
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:8000/api',
+      pathRewrite: {
+        '^/api/': '/'
+      }
+    }
+  },
+  
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
