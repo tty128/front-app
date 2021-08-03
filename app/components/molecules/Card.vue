@@ -3,7 +3,8 @@
     :to="getPrefix + getId"
     :class="['card-design' , '--' + getDesign]"
   >
-    <AtomsImage :src="getImgUrl" />
+    <!-- <AtomsImage :src="getImgUrl" /> -->
+    <AtomsSkillLogo :logo-name="getCategory" />
     <div class="card-design__info">
       <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
       <h2 class="card-design__info--title">

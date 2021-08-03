@@ -16,7 +16,8 @@
             </dl>
           </div>
           <div class="img--container">
-            <AtomsImage alt="似てない自画像" src="" />
+            <AtomsZigazo class="zigazo" />
+            <!-- <AtomsImage alt="似てない自画像" src="" /> -->
           </div>
         </div>
         <div class="--appeal flex--s-s">
@@ -79,7 +80,7 @@
                 <tr>
                   <td>C言語</td>
                   <td>★★★★☆</td>
-                  <td>職業能力開発センターにて初めて指導員の下で学んだ言語。ポインタや構造体特に問題ないが経験がないため、関数の知識が足りない。</td>
+                  <td>職業能力開発センターにて初めて指導員の下で学び、更に独学で初めてゲームを作成した言語。ポインタや構造体の使用は問題ないが経験がないため、関数の知識が足りない。</td>
                 </tr>
                 <!-- <tr>
                   <td>C#</td>
@@ -89,12 +90,12 @@
                 <tr>
                   <td>Git</td>
                   <td>★★★☆☆</td>
-                  <td>コミットするためのコマンドやブランチ等が分かるためGitBashを用いてGitHubレポジトリにコミットしているがそれ以外のコマンドは詳しくはわかっていない。</td>
+                  <td>コミットするためのコマンドやブランチ等が分かるためGitBashを用いてGitHubレポジトリにコミットしているが、基本操作以外のコマンドは詳しくは分からない。touchやmkdir等の基本的なLinuxコマンドは多少分かる。</td>
                 </tr>
                 <tr>
                   <td>MySQL</td>
                   <td>★★★★★</td>
-                  <td>SQLで直接クエリを叩くことが出来、触ったことがあるPostgreSQLやSQLiteよりは得意</td>
+                  <td>SQLで直接クエリを叩くことが出来る分、PostgreSQLやSQLiteよりは得意。尚、当サイトはherokuを使用するに当たってPostgreSQLを使用している。</td>
                 </tr>
               </tbody>
             </table>
@@ -131,12 +132,12 @@
                 <tr>
                   <td>Laravel (PHP)</td>
                   <td>★★★★☆</td>
-                  <td>PHPの学習として当サイトのバックエンドとして使用した。基本的なMVC操作が可能でLaravelBladeやAPIミドルウェア、Eloquent等使用することが可能。ServiceProviderに関してやや知識不足。</td>
+                  <td>PHPの学習のため当サイトのバックエンドとして使用した。基本的なMVC操作が可能でLaravelBladeやAPIミドルウェア、Eloquent等使用することが出来る。しかし、FacadeやServiceProviderに関してやや知識不足。</td>
                 </tr>
                 <tr>
                   <td>Wordpress (PHP)</td>
                   <td>★☆☆☆☆</td>
-                  <td>当サイトのDBを構築する際にDB構造を参考にしたことはあるが、基本的に重い印象があり使用したことがない。</td>
+                  <td>どのようなCMSかは大まかに知っており、当サイトのDBを構築する際にデータベースの構造を参考にした程度で本体を直に触ったことがない。</td>
                 </tr>
                 <tr>
                   <td>baserCMS (PHP)</td>
@@ -146,7 +147,7 @@
                 <tr>
                   <td>Android (JAVA)</td>
                   <td>★★★☆☆</td>
-                  <td>JAVA学習のためSwingをGUI無しで使用した経験があるため、かなり得意ではあるもののKotlinは触ったことがない。</td>
+                  <td>JAVA学習のためにSwingをGUI無しで使用したことがあったため、GUIのあるAndroidStudioはかなり得意ではあるもののKotlinを触ったことがない。</td>
                 </tr>
                 <!-- <tr>
                   <td>unity (C#)</td>
@@ -225,6 +226,9 @@ export default Vue.extend({})
         flex-grow: 4;
         min-width: $content_width *3;
         height: $content_width *4;
+        .zigazo{
+          height: 390px;
+        }
       }
     }
 

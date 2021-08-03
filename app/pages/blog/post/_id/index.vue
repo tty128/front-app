@@ -2,7 +2,11 @@
   <article class="blog-page-id article flex--s-s">
     <div class="article__content">
       <div class="article__content--header cl-white">
-        <h1>{{ data.title }}</h1>
+        <AtomsSkillLogo class="eyecatch flex--dc" :logo-name="data.eyecatch">
+          <h1 class="flex">
+            {{ data.title }}
+          </h1>
+        </AtomsSkillLogo>
         <div
           v-if="data.desc"
           class="description"
@@ -10,6 +14,7 @@
           {{ data.desc }}
         </div>
         <div v-if="data.taxonomy" class="taxonomy">
+          <MoleculesTaxonomyList :terms="data.category" taxonomy="category" />
           <MoleculesTaxonomyList v-for="key in Object.keys(data.taxonomy)" :key="key" :terms="toStringArray(data.taxonomy[key])" :taxonomy="key" />
         </div>
         <div class="post-meta flex--s-b">
@@ -76,6 +81,11 @@ export default class BlogPageIDComponent extends Vue {
         margin-bottom: 2rem;
         padding: 2rem;
         p{margin: 0;padding: 0;}
+
+        .eyecatch {
+          width: 100%;
+          height: 500px;
+        }
       }
       &--body {
         margin: 0;

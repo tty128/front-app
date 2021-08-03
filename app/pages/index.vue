@@ -1,7 +1,8 @@
 <template>
   <div class="top-page flex--c flex--dc">
-    <div>ここはポートフォリオのページ</div>
-    <p>{{ getAppName }}</p>
+    <AtomsLogo class="top-page__logo">
+      {{ getAppName }}
+    </AtomsLogo>
   </div>
 </template>
 
@@ -10,7 +11,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class RootPageComponent extends Vue {
-  @Prop({ type: String, default: 'App' }) readonly appName ! : string;
+  @Prop({ type: String, default: 'Portfolio' }) readonly appName ! : string;
 
   protected get getAppName (): string { return this.appName }
 }
@@ -20,5 +21,13 @@ export default class RootPageComponent extends Vue {
 .top-page {
   width: 100%;
   height: 100%;
+  min-height: 500px;
+
+  &__logo{
+    height: 5rem;
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 5rem;
+  }
 }
 </style>
