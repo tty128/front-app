@@ -144,6 +144,7 @@ export default class CreateAnchorMainComponent extends Vue {
       color:inherit;
       stroke: none;
       fill: inherit;
+      margin-bottom: 0.75rem;
     }
   }
 
@@ -153,13 +154,15 @@ export default class CreateAnchorMainComponent extends Vue {
       font-size: 1.8rem ;
 
       > li {
-        margin-top: 0.6rem;
-        &:first-child{margin-top: 0;}
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+        &:first-child{margin-top: 0.75rem;}
         > span.wrapper {
           display: inline-block;
           width: 100%;
-          border-bottom: dotted 1px;
-          a{ margin-left: 1rem; }
+          a{
+            margin-left: 1rem;
+          }
         }
       }
     }
@@ -169,7 +172,7 @@ export default class CreateAnchorMainComponent extends Vue {
       margin-left: 3.6rem;
       font-size: 1.6re ;
 
-      > li { margin-top: 0.5rem;}
+      > li {margin-bottom: 0.75rem;}
     }
 
     &__3 {
@@ -177,7 +180,7 @@ export default class CreateAnchorMainComponent extends Vue {
       margin-left:1.8rem;
       font-size:1.4rem;
 
-      > li { margin-top: 0.4rem;}
+      > li {margin-bottom: 0.75rem;}
     }
   }
 

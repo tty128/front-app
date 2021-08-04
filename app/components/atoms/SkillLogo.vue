@@ -66,10 +66,10 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class SkillLogoComponent extends Vue {
-  @Prop({ type: String, default: '' }) readonly logoName ! : string
+  @Prop({ type: String, default: '' }) readonly logoName ! : string | null
 
   protected get getLogoName () : string {
-    return this.logoName.toLowerCase()
+    return this.logoName ? this.logoName.toLowerCase() : ''
   }
 }
 </script>

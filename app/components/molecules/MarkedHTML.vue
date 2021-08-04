@@ -88,15 +88,28 @@ export default class MarkedHTMLComponent extends Vue {
   // *******
   h1 {
       // font-size: 4.8rem;
+      padding-top: 4.8rem;
+      margin-left: 4.8rem;
+      display: list-item;
+      list-style-type: square;
+
+      &:first-child{
+        padding-top: 0 ;
+      }
   }
 
   h2 {
       // font-size: 3.6rem;
+      padding-top: 3.6rem;
       border-bottom: solid 1px;
   }
 
   h3 {
       // font-size: 2.4rem;
+      margin-left: 2.8rem;
+      padding-top: 2.4rem;
+      display: list-item;
+      list-style-type: circle;
   }
 
   * {

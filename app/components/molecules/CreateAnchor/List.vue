@@ -98,5 +98,28 @@ export default class CreateAnchorListComponent extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.anchor-level{
+    &__2 {
+      list-style: disc;
+      margin-left: 1rem;
+      font-size: 1.6re ;
+
+      > li {
+        margin-bottom: 0.75rem;
+        &:first-child{margin-top: 0.75rem;}
+      }
+    }
+
+    &__3 {
+      list-style: circle;
+      margin-left:0.5rem;
+      font-size:1.4rem;
+
+      > li {
+        margin-bottom: 0.75rem;
+        &:first-child{margin-top: 0.75rem;}
+      }
+    }
+}
 </style>
