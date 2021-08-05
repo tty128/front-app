@@ -7,7 +7,7 @@
       v-for="term in getTerms"
       :key="term"
     >
-      <AtomsTermButton :class="['taxonomy-list__button', '--' + taxonomy]" :prefix="getPrefix + term.toLowerCase()">
+      <AtomsTermButton :class="['taxonomy-list__button', '--' + taxonomy]" :prefix="getPrefix + term">
         {{ term }}
       </AtomsTermButton>
     </li>
