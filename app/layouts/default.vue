@@ -7,7 +7,7 @@
       />
     </header>
     <main id="Main" class="cl-base--r">
-      <aside id="MainNav" class="sm-none">
+      <aside id="MainNav" class="md-none">
         <OrganismsNavigationUL />
       </aside>
       <Nuxt id="Content" />
