@@ -122,7 +122,14 @@ export default class MarkedHTMLComponent extends Vue {
   }
 
   pre {
-    padding: 1rem 3.6rem;
+    @media screen and (max-width:480px)  {
+      padding: 1rem 1rem;
+      line-height: 1.5rem;
+      font-size: 1rem;
+    }
+    @media screen and (min-width:480px)  {
+      padding: 1rem 3.6rem;
+    }
   }
 
   p code{

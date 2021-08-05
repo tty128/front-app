@@ -7,7 +7,7 @@
       />
     </header>
     <main id="Main" class="cl-base--r">
-      <aside id="MainNav">
+      <aside id="MainNav" class="sm-none">
         <OrganismsNavigationUL />
       </aside>
       <Nuxt id="Content" />
@@ -39,13 +39,24 @@ body {
   position: relative;
   display: flex;
   width: 100%;
+  overflow: hidden;
 }
 #MainNav {
   max-width: 150px;
   flex-grow: 1;
 }
 #Content {
-  flex-grow: 1;
-  margin: 2rem;
+  @media screen and (min-width:480px)  {
+    flex-grow: 1;
+    margin: 2rem;
+  }
+  @media screen and (max-width:480px)  {
+    width: 90%;
+    margin: 2rem auto;
+    > div {
+      width: 100%;
+      margin-right: 0 !important;
+    }
+  }
 }
 </style>

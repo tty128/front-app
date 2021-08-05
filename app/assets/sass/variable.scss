@@ -1,3 +1,7 @@
+//
+// flex class
+//
+
 .flex {
     list-style: none;
     display: flex;
@@ -22,29 +26,80 @@
     &-s{justify-content: flex-start;}
     &-e{justify-content: flex-end;}
     &-b{justify-content: space-between;}
-    &-a{justify-content: space-around;}   
+    &-a{justify-content: space-around;}
 }
 
 .flex--{
     &c { @include flex-config(center) }
     &s{ @include flex-config(flex-start) }
-    &e{ @include flex-config(flex-end) }  
-    
+    &e{ @include flex-config(flex-end) }
+
     &dc{
         list-style: none;
-        flex-direction: column; 
+        flex-direction: column;
          &r{
             list-style: none;
-            flex-direction: column-reverse; 
+            flex-direction: column-reverse;
          }
       }
-  
+
     &dr{
         list-style: none;
-        flex-direction: row; 
+        flex-direction: row;
         &r{
             list-style: none;
-            flex-direction: row-reverse; 
+            flex-direction: row-reverse;
         }
     }
+}
+
+//
+// media screen class
+//
+$screen-md: 769px;
+$screen-sm: 480px;
+$bp-list: (
+ sm: screen and (max-width: #{$screen-sm}),
+ md: screen and (min-width: #{$screen-sm},max-width: #{$screen-md}),
+ lg: screen and (min-width: #{$screen-md}),
+) !default;
+@mixin screen-mq($screen-size:"sm") {
+  @if $screen-size == "sm" {
+    @media screen and (max-width: #{$screen-sm}) {
+      @content;
+     }
+  }
+
+  @else if $screen-size == "md" {
+    @media screen and (min-width: #{$screen-sm}) and (max-width: #{$screen-md}) {
+      @content;
+     }
+  }
+
+  @else if $screen-size == "md-lg" {
+    @media screen and (min-width: #{$screen-sm})  {
+      @content;
+     }
+  }
+
+  @else {
+    @media screen and (min-width: #{$screen-md}) {
+      @content;
+     }
+  }
+}
+
+.sm-none {
+  @include screen-mq("sm"){
+    display: none !important;
+  }
+}
+.md-none {
+  @include screen-mq("sm"){
+    display: none !important;
+  }
+
+  @include screen-mq("md"){
+    display: none !important;
+  }
 }
