@@ -1,10 +1,14 @@
+import axios from 'axios'
+
+const apiPath = 'https://kbystty-portfolio-back.herokuapp.com/api'
+
 export default {
   srcDir: 'app/',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: '',
     titleTemplate(title) {
-      return (title ? `${title} | ` : '') + 'AppName'
+      return (title ? `${title} | ` : '') + 'Portfolio'
     },
     htmlAttrs: {
       lang: 'ja-JP'
@@ -13,7 +17,8 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'robots', content: 'noindex' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -52,7 +57,7 @@ export default {
 
   proxy: {
     '/api/': {
-      target: 'https://kbystty-portfolio-back.herokuapp.com/api',
+      target: apiPath,
       pathRewrite: {
         '^/api/': '/'
       }
@@ -61,5 +66,18 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  generate: {
+    async routes() {
+      return await axios.get(apiPath + '/post').then(res => {
+        return res.data.map((post) => {
+          return {
+            route: '/blog/post/' + post.id,
+            payload: post
+          }
+        })
+      })
+    }
   }
 }
