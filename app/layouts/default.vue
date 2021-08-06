@@ -39,7 +39,7 @@ body {
   position: relative;
   display: flex;
   width: 100%;
-  overflow: hidden;
+  // overflow: hidden;
 }
 #MainNav {
   max-width: 150px;
