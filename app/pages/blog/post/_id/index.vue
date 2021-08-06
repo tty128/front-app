@@ -31,7 +31,7 @@
       </div>
     </div>
     <div id="Anchor">
-      <MoleculesCreateAnchorMain :content="data.body" class="cl-secoundary">
+      <MoleculesCreateAnchorMain :content="data.body" class="Anchor__container cl-secoundary">
         INDEX
       </MoleculesCreateAnchorMain>
     </div>
@@ -95,13 +95,15 @@ export default class BlogPageIDComponent extends Vue {
   }
 
   #Anchor {
-    @media screen and (min-width:1024px){
-      position: sticky;
-    }
     flex-grow: 1;
     width: 300px;
     max-width: 800px;
     margin-right: 2rem;
+    
+    &__container {
+      position: sticky;
+      top: 2rem;
+    }
   }
 }
 </style>
