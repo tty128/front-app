@@ -100,7 +100,6 @@ export default class BlogPageIDComponent extends Vue {
     width: 300px;
     max-width: 800px;
     margin-right: 2rem;
-    
     &__container {
       position: sticky;
       top: 2rem;
