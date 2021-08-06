@@ -71,6 +71,7 @@ export default class BlogPageIDComponent extends Vue {
 .blog-page-id{
   .article {
     &__content{
+      overflow:hidden;
       max-width: 800px;
       flex-grow: 1;
       margin-right: 2rem;
