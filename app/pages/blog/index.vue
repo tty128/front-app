@@ -11,8 +11,13 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class BlogListComponent extends Vue {
-  async asyncData ({ $axios }: {$axios : any}) {
-    const data = await $axios.$get('/api/post')
+  async asyncData ({ $axios, payload }: {$axios : any, payload: any}) {
+    let data
+    if (payload) {
+      data = payload
+    } else {
+      data = await $axios.$get('/api/post')
+    }
     return { data }
   }
 
