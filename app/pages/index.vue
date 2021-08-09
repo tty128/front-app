@@ -24,10 +24,16 @@ export default class RootPageComponent extends Vue {
   min-height: 500px;
 
   &__logo{
-    height: 5rem;
-    font-size: 5rem;
     font-weight: bold;
     margin-bottom: 5rem;
+    @media screen and (max-width:480px)  {
+      height: 3rem ;
+      font-size: 3rem ;
+    }
+    @media screen and (min-width:480px)  {
+      height: 5rem;
+      font-size: 5rem;
+    }
   }
 }
 </style>

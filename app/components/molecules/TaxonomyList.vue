@@ -57,6 +57,7 @@ export default class CardComponent extends Vue {
     &__button{
       padding: 0.25rem 0.75rem;
       margin-right:0.5rem;
+      line-height: 3rem;
 
       &.--tag{
         background: #9CCC65;

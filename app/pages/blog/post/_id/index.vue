@@ -106,13 +106,14 @@ export default class BlogPageIDComponent extends Vue {
     max-width: 800px;
     @media screen and (min-width:1270px)  {
       margin-right: 2rem;
+      position: sticky;
+      top: 2rem;
     }
   }
 
-  .anchor__container {
-    position: sticky;
-    top: 2rem;
-  }
+  // .anchor__container {
+
+  // }
 
   .anchor__phone {
     margin-bottom: 2rem;
