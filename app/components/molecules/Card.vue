@@ -4,7 +4,7 @@
     :class="['card-design' , '--' + getDesign]"
   >
     <!-- <AtomsImage :src="getImgUrl" /> -->
-    <AtomsSkillLogo :logo-name="getCategory" />
+    <AtomsSkillLogo :logo-name="getEyecatch" />
     <div class="card-design__info">
       <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
       <h2 class="card-design__info--title">
@@ -33,6 +33,7 @@ export default class CardComponent extends Vue {
   @Prop({ type: String, default: 'column' }) readonly design ! :string
   @Prop({ type: String, default: './post/' }) readonly prefix ! :string
   @Prop({ type: String, default: 'uncategorized' }) readonly category ! :string
+  @Prop({ type: String, default: '' }) readonly eyecatch ! :string
   @Prop({ type: [String, Number], default: '' }) readonly id ! :string | number
   @Prop() readonly imgUrl? :string
   @Prop() readonly desc? : string | [string, number] | [string, number, string]
@@ -89,6 +90,10 @@ export default class CardComponent extends Vue {
 
   protected get getCategory () : string {
     return this.category
+  }
+
+  protected get getEyecatch () : string {
+    return this.eyecatch
   }
 }
 </script>
@@ -152,6 +157,7 @@ export default class CardComponent extends Vue {
       font-size: 1em;
       padding: 0 1em;
       word-break: break-all;
+      margin-bottom: auto;
     }
   }
 

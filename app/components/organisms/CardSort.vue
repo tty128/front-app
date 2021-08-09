@@ -1,14 +1,15 @@
 <template>
-  <ul class="flex--s ul">
+  <ul class="card-sort__list">
     <li
       v-for="item in getDatas"
       :key="item.id"
-      class="list"
+      class="card-sort__item"
     >
       <MoleculesCard
         :id="item.id"
         :prefix="prefix + '/'"
         :category="item.category"
+        :eyecatch="item.eyecatch"
       >
         {{ item.title }}
       </MoleculesCard>
@@ -31,18 +32,18 @@ export default class CardSortComponent extends Vue {
 </script>
 
 <style lang="scss">
-  .ul {
+  .card-sort__list {
     width: auto;
     margin: 0 auto;
     padding: 0;
   }
-  .list {
+  .card-sort__item {
     margin: 1rem;
     list-style: none;
     width: 200px;
     height: 200px;
-  }
-  .list:last-child{
-    float: left;
+    &:last-child{
+      float: left;
+    }
   }
 </style>

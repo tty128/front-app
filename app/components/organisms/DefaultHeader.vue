@@ -38,8 +38,9 @@ export default class DefaultHeaderComponent extends Vue {
       padding: 0;
 
       li {
-        min-width: 7rem;
+        min-width: 3rem;
         margin-left: 1rem;
+        font-size: 1.2rem;
       }
     }
   }

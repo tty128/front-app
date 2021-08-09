@@ -93,11 +93,16 @@ export default class SkillLogoComponent extends Vue {
       justify-content: center;
       width: inherit;
       height: 80%;
+      min-height: 150px;
       svg {
         text-align: center;
         vertical-align: middle;
         width: inherit;
         height: inherit;
+        max-width: 70%;
+        max-height: 70%;
+        min-width: 80px;
+        min-height: 80px;
         fill:inherit;
         stroke: inherit;
       }

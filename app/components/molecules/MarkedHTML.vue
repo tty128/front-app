@@ -122,6 +122,7 @@ export default class MarkedHTMLComponent extends Vue {
   }
 
   pre {
+    overflow-x: scroll;
     @media screen and (max-width:480px)  {
       padding: 1rem 1rem;
       line-height: 1.5rem;

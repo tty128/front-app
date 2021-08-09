@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const apiPath = 'https://kbystty-portfolio-back.herokuapp.com/api'
-// const apiPath = 'http://localhost:8000/api'
+// const apiPath = 'https://kbystty-portfolio-back.herokuapp.com/api'
+const apiPath = 'http://localhost:8000/api'
 
 export default {
   srcDir: 'app/',

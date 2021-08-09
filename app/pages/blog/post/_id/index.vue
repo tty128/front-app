@@ -26,6 +26,9 @@
           </p>
         </div>
       </div>
+      <MoleculesCreateAnchorMain :content="data.body" class="anchor__phone cl-secoundary">
+        INDEX
+      </MoleculesCreateAnchorMain>
       <div class="article__content--body cl-white">
         <MoleculesMarkedHTML :content="data.body" />
       </div>
@@ -74,8 +77,10 @@ export default class BlogPageIDComponent extends Vue {
       overflow:hidden;
       max-width: 800px;
       flex-grow: 1;
-      margin-right: 2rem;
       margin-bottom: 2rem;
+      @media screen and (min-width:1270px)  {
+        margin-right: 2rem;
+      }
 
       &--header {
         margin:0;
@@ -99,12 +104,21 @@ export default class BlogPageIDComponent extends Vue {
     flex-grow: 1;
     width: 300px;
     max-width: 800px;
-    margin-right: 2rem;
+    @media screen and (min-width:1270px)  {
+      margin-right: 2rem;
+    }
   }
 
   .anchor__container {
     position: sticky;
     top: 2rem;
+  }
+
+  .anchor__phone {
+    margin-bottom: 2rem;
+    @media screen and (min-width:1270px)  {
+      display: none;
+    }
   }
 }
 </style>

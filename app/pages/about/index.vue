@@ -212,7 +212,10 @@ export default Vue.extend({})
       .profile {
         flex-grow: 6;
         max-width: $content_width * 6.8;
-        margin-right: 2rem;
+        @media screen and (min-width:480px)  {
+          margin-right: 2rem;
+        }
+
         h1 { border-bottom: solid 2px;}
         dl {
           padding-left: 3rem;
