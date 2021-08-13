@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="autoAnchor"
+    v-if="getAnchorList"
     class="anchor-list"
   >
     <p class="anchor-list__title">
@@ -8,9 +8,9 @@
     </p>
     <ul class="anchor-list__parent anchor-level__1">
       <List
-        v-for="items in autoAnchor"
-        :key="items.id"
-        :item="items"
+        v-for="item in getAnchorList"
+        :key="item.id"
+        :item="item"
         :is-button="isButton"
         class="anchor-list__child"
         keep-alive
@@ -21,21 +21,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, VModel } from 'vue-property-decorator'
-import marked from 'marked'
-import { parse } from 'node-html-parser'
 import List from './List.vue'
-import AnchorListObj from './AnchorListObj'
-
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  pedantic: false,
-  gfm: true,
-  breaks: true,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
-  xhtml: false
-})
+import AnchorList from './AnchorList/AnchorList'
 
 @Component({
   components: {
@@ -68,52 +55,11 @@ export default class CreateAnchorMainComponent extends Vue {
     return querys
   }
 
-  protected get autoAnchor () : object | null {
+  protected get getAnchorList () : object | null {
     const domStr : string = this.domStr()
     if (domStr === '') { return null }
-    const doc = parse(marked(domStr))
-    const nodeList = doc.querySelectorAll(this.querySelect)
-    if (nodeList.length <= 0) { return null }
-
-    const querys: Array<string> = this.getQuerys
-
-    const result : Array<AnchorListObj> = []
-    // 参照を渡す
-    let resultRef = result
-
-    const isCreatedIndex : Array<boolean> = []
-    querys.forEach(() => { isCreatedIndex.push(false) })
-
-    // main start
-    nodeList.forEach((elem) => {
-      if (!elem.id) { return }
-
-      const tag: string = elem.tagName.toLowerCase()
-      const index: number = querys.findIndex((elem : string) => elem === tag)
-
-      for (let i = 0; i < querys.length; i++) {
-        if (index === i) {
-          resultRef.push({
-            tag,
-            id: elem.id,
-            text: elem.innerHTML,
-            children: []
-          })
-          isCreatedIndex[i] = true
-          resultRef = result
-        } else if (index > i) {
-          if (!isCreatedIndex[i]) {
-            resultRef.push({ children: [] })
-            isCreatedIndex[i] = true
-          }
-          resultRef = resultRef[resultRef.length - 1].children
-        } else {
-          isCreatedIndex[i] = false
-        }
-      }
-    })
-    return result
-    // main end
+    const anchor = new AnchorList(domStr)
+    return anchor.getTree(this.querySelect)
   }
 }
 </script>

@@ -18,15 +18,17 @@
           <MoleculesTaxonomyList v-for="key in Object.keys(data.taxonomy)" :key="key" :terms="toStringArray(data.taxonomy[key])" :taxonomy="key" />
         </div>
         <div class="post-meta flex--s-b">
-          <p class="post-meta--date">
-            created : {{ data.created_at }} <span v-if="data.updated_at"> ( updated : {{ data.updated_at }} ) </span>
-          </p>
+          <AtomsDateFormat
+            class="post-meta--date"
+            :date="data.created_at"
+            :update="data.updated_at"
+          />
           <p class="post-meta--author">
-            作成者 : {{ data.author }} <span v-if="data.update_author"> ( updated : {{ data.update_author }} ) </span>
+            作成者 : {{ data.author }} <span v-if="data.update_author && data.author !== data.update_author"> ( 更新者 : {{ data.update_author }} ) </span>
           </p>
         </div>
       </div>
-      <MoleculesCreateAnchorMain :content="data.body" class="anchor__phone cl-secoundary">
+      <MoleculesCreateAnchorMain :content="body" class="anchor__phone cl-secoundary">
         INDEX
       </MoleculesCreateAnchorMain>
       <div class="article__content--body cl-white">
@@ -34,7 +36,7 @@
       </div>
     </div>
     <div id="Anchor">
-      <MoleculesCreateAnchorMain :content="data.body" class="anchor__container cl-secoundary">
+      <MoleculesCreateAnchorMain :content="body" class="anchor__container cl-secoundary">
         INDEX
       </MoleculesCreateAnchorMain>
     </div>
@@ -43,6 +45,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import marked from 'marked'
 
 interface IdName {
   id:number,
@@ -53,7 +56,8 @@ interface IdName {
 export default class BlogPageIDComponent extends Vue {
   async asyncData ({ params, $axios }:{ params: any, $axios: any }) {
     const data = await $axios.$get('/api/post/' + params.id)
-    return { data }
+    const body = marked(data.body)
+    return { data, body }
   }
 
   protected toStringArray (items : Array<IdName>) : Array<string> {

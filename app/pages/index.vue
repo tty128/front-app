@@ -27,8 +27,8 @@ export default class RootPageComponent extends Vue {
     font-weight: bold;
     margin-bottom: 5rem;
     @media screen and (max-width:480px)  {
-      height: 3rem ;
-      font-size: 3rem ;
+      height: 2.4rem ;
+      font-size: 2.4rem ;
     }
     @media screen and (min-width:480px)  {
       height: 5rem;

@@ -53,6 +53,14 @@ export default class MarkedHTMLComponent extends Vue {
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 
+$background:rgb(240,240,240);
+$text-light:$background;
+$text-dark:rgb(50, 39, 39);
+$base:rgb(69, 79, 69);
+$primary:#8BC34A;
+$secondary:#9CCC65;
+$accent:#FF8A65;
+
 .contents-preview{
     width: 100%;
     height: auto;
@@ -70,12 +78,14 @@ export default class MarkedHTMLComponent extends Vue {
 
   pre {
     color:#EEE;
-    background: #2f495e ;
+    background: hsl(207, 33%, 28%) ;
   }
 
-  p code{
-    color:#2f495e;
-    background: rgb(240, 236, 236);
+  p, li {
+    code {
+      color:#2f495e;
+      background: rgb(240, 236, 236);
+    }
   }
 
   blockquote{
@@ -83,18 +93,23 @@ export default class MarkedHTMLComponent extends Vue {
     color: #777;
   }
 
+  h1{
+    color:white;
+    background: $primary;
+  }
+
   // *******
   //  font (基本的なサイズは@assetのグローバルCSSを適用する)
   // *******
   h1 {
       // font-size: 4.8rem;
-      padding-top: 4.8rem;
-      margin-left: 4.8rem;
-      display: list-item;
-      list-style-type: square;
+      margin-top: 7.2rem;
+      padding: 1rem 2.4rem;
+      // display: list-item;
+      // list-style-type: square;
 
       &:first-child{
-        padding-top: 0 ;
+        margin-top: 0 ;
       }
   }
 
@@ -125,16 +140,18 @@ export default class MarkedHTMLComponent extends Vue {
     overflow-x: scroll;
     @media screen and (max-width:480px)  {
       padding: 1rem 1rem;
-      line-height: 1.5rem;
-      font-size: 1rem;
+      line-height: 2.4rem;
+      font-size: 1.4rem;
     }
     @media screen and (min-width:480px)  {
       padding: 1rem 3.6rem;
     }
   }
 
-  p code{
-    padding: 0.25rem 1rem;
+  p, li {
+    code {
+      padding: 0.25rem 1rem;
+    }
   }
 
   blockquote{
@@ -144,6 +161,10 @@ export default class MarkedHTMLComponent extends Vue {
 
   code{
     font-family: 'Source Code Pro', monospace;
+  }
+
+  img {
+    width: 100%;
   }
 }
 </style>

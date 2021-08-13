@@ -47,7 +47,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import List from './List.vue'
-import AnchorListObj from './AnchorListObj'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import AnchorList from './AnchorList/AnchorList'
 
 @Component({
   name: 'List',
@@ -56,7 +57,7 @@ import AnchorListObj from './AnchorListObj'
   }
 })
 export default class CreateAnchorListComponent extends Vue {
-  @Prop() readonly item ! : AnchorListObj
+  @Prop() readonly item ! : AnchorElement
   @Prop({ type: Number, default: 1 }) readonly level ! : number
   @Prop({ type: Boolean, default: false }) readonly isButton ! : boolean
   @Prop({ type: Number, default: 1 }) readonly btnNest ! : number
