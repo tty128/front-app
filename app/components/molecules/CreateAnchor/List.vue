@@ -48,7 +48,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import List from './List.vue'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import AnchorList from './AnchorList/AnchorList'
+import AnchorElement from './AnchorList/AnchorElement'
 
 @Component({
   name: 'List',
