@@ -1,26 +1,26 @@
 <template>
-  <NuxtLink
-    :to="getPrefix + getId"
-    :class="['card-design' , '--' + getDesign]"
-  >
-    <!-- <AtomsImage :src="getImgUrl" /> -->
-    <AtomsSkillLogo :logo-name="getEyecatch" />
-    <div class="card-design__info">
-      <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
-      <h2 class="card-design__info--title">
-        <slot />
-      </h2>
-      <p v-if="getDesc" class="card-design__info--desc">
-        {{ getDesc }}
-      </p>
-      <div v-if="getDate" class="card-design__info--date">
-        <p>{{ getDate[0] }}</p>
+  <NuxtLink :to="getPrefix + getId" class="card-design">
+    <AtomsLogo class="logo" />
+    <div :class="['card-design--wrapper', cardClass]">
+      <!-- <AtomsImage :src="getImgUrl" /> -->
+      <AtomsSkillLogo :logo-name="getEyecatch" />
+      <div class="card-design__info">
         <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
-        <p v-if="getDate[1]">{{ getDate[1] }}</p>
+        <h2 class="card-design__info--title">
+          <slot />
+        </h2>
+        <p v-if="getDesc" class="card-design__info--desc">
+          {{ getDesc }}
+        </p>
+        <div v-if="getDate" class="card-design__info--date">
+          <p>{{ getDate[0] }}</p>
+          <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
+          <p v-if="getDate[1]">{{ getDate[1] }}</p>
+        </div>
+        <AtomsTermButton class="card-design__info--category" :prefix="'/taxonomy/category/' + getCategory.toLowerCase()">
+          {{ getCategory }}
+        </AtomsTermButton>
       </div>
-      <AtomsTermButton class="card-design__info--category" :prefix="'/taxonomy/category/' + getCategory.toLowerCase()">
-        {{ getCategory }}
-      </AtomsTermButton>
     </div>
   </NuxtLink>
 </template>
@@ -30,7 +30,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class CardComponent extends Vue {
-  @Prop({ type: String, default: 'column' }) readonly design ! :string
+  @Prop({ type: String, default: '' }) readonly cardClass ! :string
   @Prop({ type: String, default: './post/' }) readonly prefix ! :string
   @Prop({ type: String, default: 'uncategorized' }) readonly category ! :string
   @Prop({ type: String, default: '' }) readonly eyecatch ! :string
@@ -38,10 +38,6 @@ export default class CardComponent extends Vue {
   @Prop() readonly imgUrl? :string
   @Prop() readonly desc? : string | [string, number] | [string, number, string]
   @Prop() readonly date? : string | [string, string]
-
-  protected get getDesign () : string {
-    return this.design
-  }
 
   protected get getPrefix () : string {
     return this.prefix
@@ -100,29 +96,67 @@ export default class CardComponent extends Vue {
 
 <style lang="scss" scoped>
 .card-design{
-  background: #FFF;
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: inherit;
+  height: inherit;
+
+  transition: all 0.3s;
+  overflow: hidden;
+
+  text-decoration: none;
   &__img{
     stroke: none;
-    fill: #FFF;
-    background: #CCC;
+    fill: inherit;
+    background: inherit;
+  }
+
+  &:hover {
+    z-index: 10;
+    padding-top:60px;
+    .card-design--wrapper{
+      // background-color: lighten(rgb(69, 79, 69),20%)!important;
+      // background-color: lighten(#FF8A65,20%)!important;
+      // color:rgb(50, 39, 39);
+      // stroke: rgb(50, 39, 39);
+      // fill:rgb(50, 39, 39);
+      transition: all 0.3s;
+    }
+  }
+
+  .logo{
+    position: absolute;
+    top: -35px;
+    left: 0px;
+    height: 250px;
+    transform: scaleX(-1);
   }
 }
 
 .card-design {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-
-  text-decoration: none;
-
-  &.--column {
+  &--wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
-    .card-design__info {
-      flex-direction: column;
-      flex-grow: 2;
+    &::before{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: ' ';
+      transition: all 0.3s;
     }
+  }
+
+  .card-design__info {
+    flex-direction: column;
+    flex-grow: 2;
   }
 
   &__img {

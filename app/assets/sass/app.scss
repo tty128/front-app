@@ -43,3 +43,12 @@ h2 {
         font-size: 2rem;/* 20px*/
     }
 }
+
+/* purgecss start ignore */
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+}
+/* purgecss end ignore */

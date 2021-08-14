@@ -1,9 +1,9 @@
 <template>
-  <ul>
+  <ul class="navigationUL">
     <li
       v-for="path in paths"
       :key="path"
-      :class="getLiClass"
+      :class="['navigationUL__item',getLiClass]"
     >
       <NuxtLink
         :to="'/' + path"
@@ -31,7 +31,7 @@ export default class NavigationULComponent extends Vue {
 </script>
 
 <style lang="scss">
-#Header {
-  background: red;
+.navigationUL {
+  user-select: none;
 }
 </style>

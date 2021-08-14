@@ -24,6 +24,7 @@ export default class DefaultHeaderComponent extends Vue {
 
 <style lang="scss">
 .header {
+  user-select: none;
   padding: 1rem 2rem;
 
   &__app-name {

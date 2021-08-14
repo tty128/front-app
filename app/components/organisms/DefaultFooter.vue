@@ -27,6 +27,7 @@ export default class DefaultHeaderComponent extends Vue {
 
 <style lang="scss">
 .footer{
+  user-select: none;
   padding: 2rem;
 
   &__app-name {

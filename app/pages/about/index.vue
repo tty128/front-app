@@ -1,7 +1,7 @@
 <template>
   <article class="about-page article flex--s-s">
     <div class="article__content">
-      <div class="article__content--body flex--s">
+      <div class="article__content--body flex--s cl-white">
         <div class="--header flex--s">
           <div class="profile">
             <h1>Profile</h1>

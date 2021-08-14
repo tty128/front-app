@@ -1,7 +1,7 @@
 <template>
   <article class="blog-list">
     <MoleculesPagination :pages="data" button-class="cl-secoundary" />
-    <OrganismsCardSort class="blog-list__items flex--s" :data="dataSlice(data,parseInt($route.query.page || 1))" />
+    <OrganismsCardSort class="blog-list__items flex--s" li-class="cl-white" a-class="cl-primary" card-class="cl-white" :data="dataSlice(data,parseInt($route.query.page || 1))" />
     <MoleculesPagination :pages="data" button-class="cl-secoundary" />
   </article>
 </template>

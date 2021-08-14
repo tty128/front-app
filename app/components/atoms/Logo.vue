@@ -64,6 +64,9 @@ export default class LogoComponent extends Vue {}
 
 <style lang="scss">
   .logo {
+    pointer-events: none;
+    user-select:none;
+
     stroke: none;
 
     flex-grow: 1;

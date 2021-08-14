@@ -1,8 +1,10 @@
 <template>
   <div class="top-page flex--c flex--dc">
-    <AtomsLogo class="top-page__logo">
-      {{ getAppName }}
-    </AtomsLogo>
+    <transition name="home" appear>
+      <AtomsLogo id="Logo" class="top-page__logo">
+        {{ getAppName }}
+      </AtomsLogo>
+    </transition>
   </div>
 </template>
 
@@ -35,5 +37,7 @@ export default class RootPageComponent extends Vue {
       font-size: 5rem;
     }
   }
+  // .home-enter-active, .home-leave-active { transition: opacity .5s; }
+  // .home-enter, .home-leave-active { opacity: 0; }
 }
 </style>

@@ -23,30 +23,47 @@ a{
     {color: $color;}
 }
 
-.cl-white{
-    background: white;
+.cl-white, .cl-white--h:hover{
+    $bg-color :white;
     $color:$text-dark;
 
+    background: $bg-color;
     color: $color;
     fill:$color;
     stroke: $color;
+
+    transition: all 0.3s;
 }
 
-.cl-base{
-    background: $base;
+.cl-base {
+    $bg-color :$base;
     $color:$text-light;
 
+    background: $bg-color;
     color: $color;
     fill:$color;
     stroke: $color;
 
-    &--r{
+
+    &--r {
         background: $background;
-        $color:$base;
-    
+        $color:$bg-color;
+
         color: $color;
         fill:$color;
         stroke: $color;
+    }
+
+    &--h:hover {
+        $bg-color :lighten($base,20%);
+        $color:$text-light;
+
+        background: $bg-color;
+        color: $color;
+        fill:$color;
+        stroke: $color;
+        transition: all 0.3s;
+
     }
 }
 
@@ -58,13 +75,23 @@ a{
     fill:$color;
     stroke: $color;
 
-    &--r{
+    &--r {
         background: $background;
         $color:$primary;
-    
+
         color: $color;
         fill:$color;
         stroke: $color;
+    }
+
+    &--h:hover{
+      background: lighten($primary,20%);
+      $color:$text-dark;
+
+      color: $color;
+      fill:$color;
+      stroke: $color;
+      transition: all 0.3s;
     }
 }
 
@@ -76,13 +103,23 @@ a{
     fill:$color;
     stroke: $color;
 
-    &--r{
+    &--r {
         background: $background;
         $color:$secondary;
-    
+
         color: $color;
         fill:$color;
         stroke: $color;
+    }
+
+    &--h:hover {
+      background: lighten($secondary, 20%);
+      $color:$text-dark;
+
+      color: $color;
+      fill:$color;
+      stroke: $color;
+      transition: all 0.3s;
     }
 }
 
@@ -94,12 +131,22 @@ a{
     fill:$color;
     stroke: $color;
 
-    &--r{
+    &--r {
         background: $background;
         $color:$accent;
-    
+
         color: $color;
         fill:$color;
         stroke: $color;
+    }
+
+    &--h:hover{
+      background: lighten($accent,20%);
+      $color:$text-light;
+
+      color: $color;
+      fill:$color;
+      stroke: $color;
+      transition: all 0.3s;
     }
 }
