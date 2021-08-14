@@ -1,5 +1,5 @@
 <template>
-  <div class="logo">
+  <div class="logo-svg">
     <!-- eslint-disable-next-line vue/max-attributes-per-line -->
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="506" height="418" viewBox="0 0 506 418">
       <g transform="translate(0.00,418) scale(0.10,-0.10)" stroke="none">
@@ -58,7 +58,7 @@ export default class LogoComponent extends Vue {}
 </script>
 
 <style lang="scss">
-  .logo {
+  .logo-svg {
     pointer-events: none;
     user-select:none;
 
