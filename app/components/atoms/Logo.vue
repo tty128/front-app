@@ -80,6 +80,7 @@ export default class LogoComponent extends Vue {}
 
     &__inline {
       display: inline-block;
+      min-width: 3rem;
       height: inherit;
       svg {
         text-align: center;
