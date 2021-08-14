@@ -121,7 +121,7 @@ export default class CardComponent extends Vue {
       // color:rgb(50, 39, 39);
       // stroke: rgb(50, 39, 39);
       // fill:rgb(50, 39, 39);
-      transition: all 0.3s;
+      transition: all 0.5s ease-in-out;
     }
   }
 
