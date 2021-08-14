@@ -33,31 +33,38 @@ export default class DefaultLayoutComponent extends Vue {
   private mouseX :number = 0
   private mouseY :number = 0
   private counter :number = 0
+  private animationId :number = 0
 
   mounted () {
     const canvas : HTMLCanvasElement = document.getElementById('Canvas') as HTMLCanvasElement
-    if (canvas) {
-      const cvs = new Canvas(canvas)
-      document.body.addEventListener('mousemove', (e) => {
-        const speed : number = 10
-        const x : number = e.clientX
-        const y : number = e.clientY
+    const cvs = new Canvas(canvas)
+    document.body.addEventListener('mousemove', (e) => {
+      const speed : number = 10
+      const x : number = e.clientX
+      const y : number = e.clientY
 
-        if ((Math.abs(this.mouseX - x) > speed || Math.abs(this.mouseY - y) > speed)) {
-          this.counter++
-          if ((this.counter % 3) === 0) {
-            cvs.moveEvent(x, y)
-            this.counter = 0
-          }
+      if ((Math.abs(this.mouseX - x) > speed || Math.abs(this.mouseY - y) > speed)) {
+        this.counter++
+        if ((this.counter % 3) === 0) {
+          cvs.moveEvent(x, y)
+          this.counter = 0
         }
-        this.mouseX = x
-        this.mouseY = y
-      })
-      document.body.addEventListener('click', () => {
-        cvs.clickEvent(this.mouseX, this.mouseY)
-      })
+      }
+      this.mouseX = x
+      this.mouseY = y
+    })
+    document.body.addEventListener('click', () => {
+      cvs.clickEvent(this.mouseX, this.mouseY)
+    })
+    const run = () => {
       cvs.start()
+      try {
+        this.animationId = window.requestAnimationFrame(run)
+      } catch {
+        window.cancelAnimationFrame(this.animationId)
+      }
     }
+    window.requestAnimationFrame(run)
   }
 }
 </script>
@@ -117,5 +124,14 @@ body {
   z-index: 1;
   top:0;
   left: 0;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
 }
 </style>

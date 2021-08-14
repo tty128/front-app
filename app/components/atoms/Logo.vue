@@ -79,6 +79,7 @@ export default class LogoComponent extends Vue {}
       stroke: inherit;
     }
     span {
+      user-select: none;
       text-align: center;
       vertical-align: center;
     }

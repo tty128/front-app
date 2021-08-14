@@ -24,6 +24,22 @@ export default class BlogListComponent extends Vue {
   protected dataSlice (data:any, query:number) : Array<any> {
     return data.slice((query - 1) * 12, query * 12)
   }
+
+  transition (to: any, from: any) {
+    const paths : Array<string> = ['/about', '/taxonomy']
+    if (from) {
+      for (const path of paths) {
+        if ((to.path === path) || (from.path === path)) {
+          if (path === paths[0]) {
+            return 'anime--slide-left'
+          } else {
+            return 'anime--slide-right'
+          }
+        }
+      }
+    }
+    return 'anime--slide-up'
+  }
 }
 </script>
 

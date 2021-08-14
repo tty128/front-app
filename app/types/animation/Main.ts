@@ -28,27 +28,22 @@ export default class MainCanvas {
     }
   }
 
-  public view () : void {
+  private paint (ctx : CanvasRenderingContext2D) : void {
     const rand : number = Math.floor(Math.random() * 1000)
-    if (this.ctx) {
+    if (ctx) {
       if (rand > 1000 * (1 - (this.frequency / 100))) {
-        this.manager.add(new Rain(this.canvas, this.ctx))
+        this.manager.add(new Rain(this.canvas, ctx))
       }
       if (this.manager.objectExists()) {
         this.manager.action()
-      }
-      if (this.manager.getActiveLength() > 50) {
-        this.manager.destroy(0)
       }
     }
   }
 
   public start () : void {
-    setInterval(() => {
-      if (this.ctx) {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-      }
-      this.view()
-    }, 30)
+    if (this.ctx) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+      this.paint(this.ctx)
+    }
   }
 }

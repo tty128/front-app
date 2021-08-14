@@ -46,6 +46,18 @@ export default class TaxonomyComponent extends Vue {
     })
     return array
   }
+
+  transition (to: any, from: any) {
+    const paths : Array<string> = ['/blog', '/about']
+    if (from) {
+      for (const path of paths) {
+        if (to.path === path || from.path === path) {
+          return 'anime--slide-right'
+        }
+      }
+    }
+    return 'anime--slide-up'
+  }
 }
 </script>
 
@@ -55,7 +67,9 @@ export default class TaxonomyComponent extends Vue {
     &__content{
       max-width: 800px;
       flex-grow: 3;
-      margin-right: 2rem;
+      @media screen and (min-width:1270px)  {
+        margin-right: 2rem;
+      }
       margin-bottom: 2rem;
 
       &--header {
@@ -74,7 +88,9 @@ export default class TaxonomyComponent extends Vue {
     flex-grow: 1;
     width: 300px;
     max-width: 800px;
-    margin-right: 2rem;
+    @media screen and (min-width:1270px)  {
+      margin-right: 2rem;
+    }
   }
 }
 </style>

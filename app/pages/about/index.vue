@@ -165,9 +165,26 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'nuxt-property-decorator'
 
-export default Vue.extend({})
+@Component
+export default class RootPageComponent extends Vue {
+  transition (to: any, from: any) {
+    const paths : Array<string> = ['/blog', '/taxonomy']
+    if (from) {
+      for (const path of paths) {
+        if (to.path === path || from.path === path) {
+          return 'anime--slide-left'
+        }
+      }
+    }
+    if (to.path === '/') {
+      return 'anime--slide-up'
+    } else {
+      return 'anime--slide-down'
+    }
+  }
+}
 </script>
 
 <style lang="scss">

@@ -1,23 +1,26 @@
 <template>
   <div class="top-page flex--c">
     <AtomsLogo id="Logo" class="top-page__logo" />
-    <span>{{ getAppName }}</span>
+    <span class="top-page__app-name">{{ getAppName }}</span>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component
 export default class RootPageComponent extends Vue {
   @Prop({ type: String, default: 'Portfolio' }) readonly appName ! : string;
-
   protected get getAppName (): string { return this.appName }
+  transition () {
+    return 'anime--slide-up'
+  }
 }
 </script>
 
 <style lang="scss">
 .top-page {
+  user-select: none;
   width: 100%;
   height: 100%;
   min-height: 500px;
@@ -40,7 +43,6 @@ export default class RootPageComponent extends Vue {
       margin-right: 1rem;
     }
   }
-  // .home-enter-active, .home-leave-active { transition: opacity .5s; }
-  // .home-enter, .home-leave-active { opacity: 0; }
 }
+
 </style>

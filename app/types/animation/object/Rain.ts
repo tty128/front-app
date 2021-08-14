@@ -12,9 +12,9 @@ export default class Rain extends DrawObject {
   constructor (canvas : HTMLCanvasElement, ctx : CanvasRenderingContext2D, x? :number, y? :number) {
     super(canvas, ctx, x, y)
     const { color } = new AnimationConfig()
-    this.speed = Math.floor(Math.random() * 6) + 1
-    this.speedDown = Math.floor(Math.random() * 2) + 1
-    this.lineWidth = Math.floor((Math.random() * 3)) + 1
+    this.speed = Math.floor(Math.random() * 5) + 1
+    this.speedDown = Math.floor(Math.random() * 3) + 1
+    this.lineWidth = Math.floor((Math.random() * 10)) + 1
     const c = color
     this.color = c[Math.floor(Math.random() * c.length)]
   }
@@ -35,6 +35,7 @@ export default class Rain extends DrawObject {
     this.ctx.strokeStyle = 'rgba(' + this.color + ',' + this.alpha + ')'
     this.ctx.stroke()
     this.radius += this.speed
+    this.lineWidth = this.lineWidth - (this.lineWidth / 80)
     this.alpha -= 0.012
     this.speed = this.speed / ((101 + this.speedDown) / 100)
 

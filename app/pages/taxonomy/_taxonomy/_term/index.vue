@@ -28,6 +28,14 @@ export default class TaxonomyTermComponent extends Vue {
   dataSlice (data:any, query:number) : Array<any> {
     return data.slice((query - 1) * 12, query * 12)
   }
+
+  transition (to: { path: string }) {
+    if (to.path === '/') {
+      return 'anime--slide-up'
+    } else {
+      return 'anime--slide-down'
+    }
+  }
 }
 </script>
 

@@ -1,5 +1,6 @@
 @import "variable";
 @import "color";
+@import "anime";
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
 
@@ -42,11 +43,4 @@ h2 {
     h2 {
         font-size: 2rem;/* 20px*/
     }
-}
-
-.page-enter-active, .page-leave-active {
-  transition: opacity .5s;
-}
-.page-enter, .page-leave-to {
-  opacity: 0;
 }

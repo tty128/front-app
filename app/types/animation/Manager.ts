@@ -4,6 +4,7 @@ export default class Manager {
   private exec : Array<DrawObject> = []
   private actionIndex : Array<number> = []
   private destroyIndex : Array<number> = []
+  private limit :number = 50
 
   public objectExists () : boolean {
     return this.exec.length > 0
@@ -29,9 +30,14 @@ export default class Manager {
         obj.setDelay(delay - 1)
       }
     })
-    this.destroyIndex.forEach((i : number) => {
-      this.exec.splice(i, 1)
-    })
+    for (let i = this.destroyIndex.length - 1; i >= 0; i--) {
+      this.destroy(this.destroyIndex[i])
+    }
+    if (this.exec.length > this.limit) {
+      for (let i = 0; i < this.exec.length - this.limit; i++) {
+        this.destroy(0)
+      }
+    }
   }
 
   public getActionIndex () : Array<number> {
@@ -50,7 +56,7 @@ export default class Manager {
   }
 
   public destroy (index : number) : void {
-    this.exec[index].kill()
+    this.exec.splice(index, 1)
   }
 
   public event (index : number) : void {

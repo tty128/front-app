@@ -1,0 +1,31 @@
+.anime {
+  &--slide
+  {
+    &-up, &-right, &-left, &-down {
+      &-enter-active, &-leave-active { transition: all .5s ease !important;}
+      &-enter, &-leave-active {
+        opacity: 0 !important;
+      }
+    }
+    &-up {
+      &-enter, &-leave-active {
+        transform: translateY(-30px);
+      }
+    }
+    &-right {
+      &-enter, &-leave-active {
+        transform: translateX(-30px);
+      }
+    }
+    &-left {
+      &-enter, &-leave-active {
+        transform: translateX(30px);
+      }
+    }
+    &-down {
+      &-enter, &-leave-active {
+        transform: translateY(30px);
+      }
+    }
+  }
+}
