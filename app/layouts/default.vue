@@ -106,10 +106,10 @@ body {
   @media screen and (max-width:780px)  {
     width: 90%;
     margin: 2rem auto;
-    > div {
-      width: 100%;
-      margin-right: 0 !important;
-    }
+    // > div {
+    //   width: 100%;
+    //   margin-right: 0 !important;
+    // }
   }
 }
 #Canvas {

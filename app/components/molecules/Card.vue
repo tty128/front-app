@@ -127,9 +127,10 @@ export default class CardComponent extends Vue {
 
   .logo{
     position: absolute;
-    top: -35px;
-    left: 0px;
-    height: 250px;
+    top: -70px;
+    left: 15px;
+    height: 320px;
+    width: 320px;
     transform: scaleX(-1);
   }
 }

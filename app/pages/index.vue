@@ -1,10 +1,7 @@
 <template>
-  <div class="top-page flex--c flex--dc">
-    <transition name="home" appear>
-      <AtomsLogo id="Logo" class="top-page__logo">
-        {{ getAppName }}
-      </AtomsLogo>
-    </transition>
+  <div class="top-page flex--c">
+    <AtomsLogo id="Logo" class="top-page__logo" />
+    <span>{{ getAppName }}</span>
   </div>
 </template>
 
@@ -24,17 +21,23 @@ export default class RootPageComponent extends Vue {
   width: 100%;
   height: 100%;
   min-height: 500px;
+  font-weight: bold;
 
-  &__logo{
-    font-weight: bold;
-    margin-bottom: 5rem;
-    @media screen and (max-width:480px)  {
-      height: 4rem ;
-      font-size: 4rem ;
+  @media screen and (max-width:480px)  {
+  font-size: 4rem ;
+    &__logo{
+      width: 4rem;
+      height: 4rem;
+      margin-right: 1rem;
     }
-    @media screen and (min-width:480px)  {
-      height: 5rem;
-      font-size: 5rem;
+  }
+
+  @media screen and (min-width:480px)  {
+    font-size: 5rem ;
+    &__logo{
+      width: 5rem;
+      height: 5rem ;
+      margin-right: 1rem;
     }
   }
   // .home-enter-active, .home-leave-active { transition: opacity .5s; }
