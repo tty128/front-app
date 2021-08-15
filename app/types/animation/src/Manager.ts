@@ -1,10 +1,12 @@
+import Config from '../Config'
+import MainAddOption from './interface/MainAddOption'
 import DrawObject from './object/DrawObject'
 
 export default class Manager {
   private exec : Array<DrawObject> = []
   private actionIndex : Array<number> = []
   private destroyIndex : Array<number> = []
-  private limit :number = 50
+  private limit :number = Config.MANAGER_OBJECTS_LIMIT
 
   public objectExists () : boolean {
     return this.exec.length > 0
@@ -14,13 +16,13 @@ export default class Manager {
     return this.exec.length
   }
 
-  public action () : void {
+  public action (ctx : CanvasRenderingContext2D) : void {
     this.destroyIndex = []
     this.actionIndex = []
     this.exec.forEach((obj : DrawObject, index : number) => {
       const delay = obj.getDelay()
       if (delay <= 0) {
-        if (obj.action()) {
+        if (obj.action(ctx)) {
           this.actionIndex.push(index)
         }
         if (obj.destroy()) {
@@ -48,10 +50,9 @@ export default class Manager {
     return this.destroyIndex
   }
 
-  public add (obj : DrawObject, delay? : number) : void {
-    if (delay) {
-      obj.setDelay(delay)
-    }
+  public add (obj : DrawObject, option : MainAddOption) : void {
+    obj.setDelay(option.delay || 0)
+    obj.setColor(option.color)
     this.exec.push(obj)
   }
 

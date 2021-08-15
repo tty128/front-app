@@ -54,7 +54,7 @@ interface IdName {
 
 @Component
 export default class BlogPageIDComponent extends Vue {
-  async asyncData ({ params, $axios }:{ params: any, $axios: any }) {
+  async asyncData ({ params, $axios }:{ params: any, $axios: any, payload:any }) {
     const data = await $axios.$get('/api/post/' + params.id)
     const body = marked(data.body)
     return { data, body }

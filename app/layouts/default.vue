@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Canvas from '../types/animation/Main'
+import Rainy from '../types/animation/main/Rainy'
 
 @Component
 export default class DefaultLayoutComponent extends Vue {
@@ -37,16 +37,16 @@ export default class DefaultLayoutComponent extends Vue {
 
   mounted () {
     const canvas : HTMLCanvasElement = document.getElementById('Canvas') as HTMLCanvasElement
-    const cvs = new Canvas(canvas)
+    const cvs = new Rainy(canvas)
     document.body.addEventListener('mousemove', (e) => {
       const speed : number = 10
       const x : number = e.clientX
       const y : number = e.clientY
 
-      if ((Math.abs(this.mouseX - x) > speed || Math.abs(this.mouseY - y) > speed)) {
+      if (Math.abs(this.mouseX - x) + Math.abs(this.mouseY - y) > speed) {
         this.counter++
-        if ((this.counter % 3) === 0) {
-          cvs.moveEvent(x, y)
+        if ((this.counter % 2) === 0) {
+          cvs.moveEvent({ x, y })
           this.counter = 0
         }
       }
@@ -54,7 +54,7 @@ export default class DefaultLayoutComponent extends Vue {
       this.mouseY = y
     })
     document.body.addEventListener('click', () => {
-      cvs.clickEvent(this.mouseX, this.mouseY)
+      cvs.clickEvent({ x: this.mouseX, y: this.mouseY })
     })
     const run = () => {
       cvs.start()
