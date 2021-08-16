@@ -105,7 +105,7 @@ body {
 #Content {
   position: relative;
   z-index: 9;
-  opacity: 0.78;
+  opacity: 0.9;
   @media screen and (min-width:780px)  {
     flex-grow: 1;
     margin: 2rem;
