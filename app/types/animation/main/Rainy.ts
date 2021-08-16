@@ -10,7 +10,7 @@ export default class Rainy extends AnimationMain {
     '170, 242, 196'
   ]
 
-  private frequency : number = 15
+  private probability : number = 15
 
   public clickEvent (params : EventParams) : void {
     const x = params.x || 0
@@ -35,7 +35,7 @@ export default class Rainy extends AnimationMain {
   public paint (_ctx : CanvasRenderingContext2D) : void {
     const accuracy = 1000
     const rand : number = this.random(accuracy)
-    if (rand > accuracy * (1 - (this.frequency / 100))) {
+    if (rand > accuracy * (1 - (this.probability / 100))) {
       const randX : number = this.random(this.getCanvas().width)
       const randY : number = this.random(this.getCanvas().height)
       this.add(new Rain([randX, randY]))
