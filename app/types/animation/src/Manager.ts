@@ -22,12 +22,9 @@ export default class Manager {
     this.exec.forEach((obj : DrawObject, index : number) => {
       const delay = obj.getDelay()
       if (delay <= 0) {
-        if (obj.action(ctx)) {
-          this.actionIndex.push(index)
-        }
-        if (obj.destroy()) {
-          this.destroyIndex.push(index)
-        }
+        if (obj.action(ctx)) { this.actionIndex.push(index) }
+        this.actionIndex.forEach((i : number) => { this.event(i) })
+        if (obj.destroy()) { this.destroyIndex.push(index) }
       } else {
         obj.setDelay(delay - 1)
       }
