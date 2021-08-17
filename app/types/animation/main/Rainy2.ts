@@ -1,8 +1,9 @@
 import Rain from '../object/Rain'
-import AnimationMain from '../src/main/AnimationMain'
+import Test from '../object/Test'
 import EventParams from '../src/interface/EventParams'
+import AnimationLayerMain from '../src/main/AnimationLayerMain'
 
-export default class Rainy extends AnimationMain {
+export default class Rainy extends AnimationLayerMain {
   protected randomColor: string[] | null = [
     '210, 210, 210',
     '255, 255, 255',
@@ -32,6 +33,12 @@ export default class Rainy extends AnimationMain {
     this.add(new Rain([px, py], { speed: 3 }), { delay: 10 })
   }
 
+  public init (): void {
+    this.addLayer(1)
+  }
+
+  private test :boolean = true
+
   public paint (_ctx : CanvasRenderingContext2D) : void {
     const accuracy = 1000
     const rand : number = this.random(accuracy)
@@ -39,6 +46,12 @@ export default class Rainy extends AnimationMain {
       const randX : number = this.random(this.getCanvas().width)
       const randY : number = this.random(this.getCanvas().height)
       this.add(new Rain([randX, randY]))
+    }
+
+    this.changeFocusLayer(1)
+    if (this.test) {
+      this.add(new Test())
+      this.test = false
     }
   }
 }

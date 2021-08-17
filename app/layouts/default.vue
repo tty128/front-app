@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Rainy from '../types/animation/main/Rainy'
+import Rainy from '../types/animation/main/Rainy2'
 
 @Component
 export default class DefaultLayoutComponent extends Vue {

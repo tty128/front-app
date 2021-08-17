@@ -60,4 +60,8 @@ export default class Manager {
   public event (index : number) : void {
     this.exec[index].event()
   }
+
+  public setLimit (limit : number) : void {
+    this.limit = limit
+  }
 }

@@ -1,13 +1,13 @@
 /* eslint-disable no-dupe-class-members */
-import EventParams from './interface/EventParams'
-import MainAddOption from './interface/MainAddOption'
-import Manager from './Manager'
-import DrawObject from './object/DrawObject'
+import EventParams from '../interface/EventParams'
+import MainAddOption from '../interface/MainAddOption'
+import Manager from '../Manager'
+import DrawObject from '../object/DrawObject'
 
 export default abstract class AnimationMain {
-  private canvas : HTMLCanvasElement
-  private ctx : CanvasRenderingContext2D | null = null
-  private manager : Manager
+  protected canvas : HTMLCanvasElement
+  protected ctx : CanvasRenderingContext2D | null = null
+  protected manager : Manager
   protected abstract randomColor: Array<string> | null
 
   constructor (canvas : HTMLCanvasElement) {

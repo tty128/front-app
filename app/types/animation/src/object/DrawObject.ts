@@ -2,10 +2,11 @@ import Config from '../../Config'
 
 export default abstract class DrawObject {
   private end : boolean = false
-  protected x :number | undefined
-  protected y : number | undefined
+  protected x :number = 0
+  protected y : number = 0
   protected delay : number = 0
   protected color : string = Config.DRAW_OBJECT_DEFAULT_COLOR
+  protected trigger : boolean = false
 
   constructor ()
   constructor (x : Array<number>)
@@ -30,9 +31,24 @@ export default abstract class DrawObject {
   }
 
   public abstract created () : void
-  public abstract action (ctx : CanvasRenderingContext2D) : boolean
+  public action (ctx : CanvasRenderingContext2D) : boolean {
+    this.paint(ctx)
+    this.move()
+    return this.trigger
+  }
+
+  public abstract paint(ctx : CanvasRenderingContext2D) : void
+  public abstract move() : void
   public abstract destroy () : boolean
   public abstract event () : void
+
+  public getTrigger () :boolean {
+    return this.trigger
+  }
+
+  public setTrigger (bool :boolean) :void {
+    this.trigger = bool
+  }
 
   public getDelay () :number {
     return this.delay

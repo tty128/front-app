@@ -29,7 +29,7 @@ export default class Rain extends DrawObject {
 
   public created (): void {}
 
-  public action (ctx : CanvasRenderingContext2D): boolean {
+  public paint (ctx: CanvasRenderingContext2D): void {
     const x = this.x || 0
     const y = this.y || 0
     ctx.beginPath()
@@ -41,9 +41,9 @@ export default class Rain extends DrawObject {
     this.lineWidth = this.lineWidth - (this.lineWidth / 80)
     this.alpha -= 0.012
     this.speed = this.speed / ((100 + this.speedDown) / 100)
-
-    return false
   }
+
+  public move (): void {}
 
   public destroy (): boolean {
     if (this.alpha < 0) {
