@@ -40,6 +40,7 @@ export default class Rainy extends AnimationLayerMain {
   private test :boolean = true
 
   public paint (_ctx : CanvasRenderingContext2D) : void {
+    this.changeFocusLayer(0)
     const accuracy = 1000
     const rand : number = this.random(accuracy)
     if (rand > accuracy * (1 - (this.probability / 100))) {
@@ -47,9 +48,8 @@ export default class Rainy extends AnimationLayerMain {
       const randY : number = this.random(this.getCanvas().height)
       this.add(new Rain([randX, randY]))
     }
-
-    this.changeFocusLayer(1)
     if (this.test) {
+      this.changeFocusLayer(1)
       this.add(new Test())
       this.test = false
     }

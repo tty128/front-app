@@ -90,11 +90,15 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   }
 
   protected changeFocusLayer (id?: number) : void {
-    const layerId = id || this.layers[this.layers.length - 1].id
+    const layerId = id || this.layers[0].id
     const changeLayer : Layer | undefined = this.layers.find((layer: Layer) => layer.id === layerId)
     if (changeLayer) {
       this.focusLayer = changeLayer
     }
+  }
+
+  protected getForcusLayerId () : any {
+    return this.layers
   }
 
   protected add (obj : DrawObject) : void
@@ -123,7 +127,6 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   public start () : void {
     const ctx = this.ctx
     if (ctx) {
-      this.changeFocusLayer(this.layers[0].id)
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.paint(ctx)
       this.layers.forEach((layer : Layer) => {

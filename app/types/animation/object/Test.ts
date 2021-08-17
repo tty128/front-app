@@ -10,8 +10,6 @@ export default class Test extends DrawObject {
   }
 
   public move (): void {
-    this.x++
-    this.y++
   }
 
   public destroy (): boolean {
