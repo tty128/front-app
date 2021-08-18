@@ -14,7 +14,7 @@ export default class Rainy extends AnimationLayerMain {
     '170, 242, 196'
   ]
 
-  private probability : number = 15
+  private probability : number = 12
 
   public eventAciton (event?: string | number, params?: Point): void {
     let x : number = 0
@@ -61,9 +61,10 @@ export default class Rainy extends AnimationLayerMain {
   public init (): void {}
 
   public paint (_ctx : CanvasRenderingContext2D) : void {
+    const prob : number = this.getCanvas().width / 1500 * this.probability
     const accuracy = 1000
     const rand : number = this.random(accuracy)
-    if (rand > accuracy * (1 - (this.probability / 100))) {
+    if (rand > accuracy * (1 - (prob / 100))) {
       const randX : number = this.random(this.getCanvas().width)
       const randY : number = this.random(this.getCanvas().height)
       this.add(new Rain([randX, randY]))
