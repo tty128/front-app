@@ -4,12 +4,14 @@ interface RainOption {
   speed? : number,
   speedDown? : number,
   lineWidth? : number,
-  color? : string
+  color? : string,
+  alpha? : number
 }
 
 export default class Rain extends DrawObject {
   private radius : number = 0
-  private alpha : number = 1
+  private alphaMax : number = 1
+  private alpha : number = 12
 
   private speed : number = 5
   private speedDown : number = 5
@@ -24,6 +26,7 @@ export default class Rain extends DrawObject {
     this.speed = Math.floor(Math.random() * (init.speed || this.speed)) + 1
     this.speedDown = Math.floor(Math.random() * (init.speedDown || this.speedDown)) + 2
     this.lineWidth = Math.floor((Math.random() * (init.lineWidth || this.lineWidth))) + 1
+    this.alpha = init.alpha ? Math.floor((Math.random() * (init.alpha))) + 10 : this.alpha
     this.color = init.color || this.color
   }
 
@@ -35,11 +38,11 @@ export default class Rain extends DrawObject {
     ctx.beginPath()
     ctx.arc(x, y, this.radius, 0, 2 * Math.PI, false)
     ctx.lineWidth = this.lineWidth
-    ctx.strokeStyle = 'rgba(' + this.color + ',' + this.alpha + ')'
+    ctx.strokeStyle = 'rgba(' + this.color + ',' + this.alphaMax + ')'
     ctx.stroke()
     this.radius += this.speed
     this.lineWidth = this.lineWidth - (this.lineWidth / 80)
-    this.alpha -= 0.012
+    this.alphaMax -= this.alpha / 1000
     this.speed = this.speed / ((100 + this.speedDown) / 100)
   }
 
