@@ -1,8 +1,7 @@
-
 /* eslint-disable no-dupe-class-members */
 import Config from '../../Config'
-import EventParams from '../interface/EventParams'
 import MainAddOption from '../interface/MainAddOption'
+import Point from '../interface/Point'
 import Manager from '../Manager'
 import DrawObject from '../object/DrawObject'
 import AnimationMain from './AnimationMain'
@@ -30,12 +29,6 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   }
 
   public abstract init () : void
-
-  public abstract clickEvent (params : EventParams) : void
-
-  public abstract moveEvent (params : EventParams) : void
-
-  public abstract paint (ctx : CanvasRenderingContext2D) : void
 
   protected addLayer () : void
   protected addLayer (manager : Manager) : void
@@ -102,25 +95,28 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   }
 
   protected add (obj : DrawObject) : void
+
+  protected add (obj : DrawObject, move : (x: number, y :number) => Point) : void
   protected add (obj : DrawObject, option : MainAddOption) : void
+  protected add (obj : DrawObject, option : MainAddOption, move : (x: number, y :number) => Point) : void
+
   protected add (obj : DrawObject, layerId : number) : void
+  protected add (obj : DrawObject, layerId : number, move : (x: number, y :number) => Point) : void
   protected add (obj : DrawObject, layerId : number, option : MainAddOption) :void
-  protected add (obj : DrawObject, value? : MainAddOption | number, option? : MainAddOption) : void {
-    let id : number = -1
-    let op : MainAddOption
-    if (typeof value === 'number') {
-      id = value
-      op = option || {}
-    } else {
-      op = value || {}
-    }
+
+  protected add (obj : DrawObject, layerId : number, option : MainAddOption, move : (x: number, y :number) => Point) :void
+  protected add (obj : DrawObject, value1? :((x: number, y :number) => Point) | MainAddOption | number, value2? : ((x: number, y :number) => Point) | MainAddOption, move? : (x: number, y :number) => Point) : void {
+    const id : number = typeof value1 === 'number' ? value1 : -1
+    const op : MainAddOption = typeof value1 === 'object' ? value1 : typeof value2 === 'object' ? value2 : {}
+    const mv : ((x: number, y :number) => Point) | undefined = typeof value1 === 'function' ? value1 : typeof value2 === 'function' ? value2 : move
+
     if (this.randomColor && !op.color) {
       op.color = this.randomColor[this.random(this.randomColor)]
     }
     if (id === -1) {
-      this.focusLayer.manager.add(obj, op)
+      this.focusLayer.manager.add(obj, op, mv)
     } else {
-      this.layers[id].manager.add(obj, op)
+      this.layers[id].manager.add(obj, op, mv)
     }
   }
 

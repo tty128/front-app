@@ -1,5 +1,6 @@
 import Config from '../Config'
 import MainAddOption from './interface/MainAddOption'
+import Point from './interface/Point'
 import DrawObject from './object/DrawObject'
 
 export default class Manager {
@@ -47,9 +48,12 @@ export default class Manager {
     return this.destroyIndex
   }
 
-  public add (obj : DrawObject, option : MainAddOption) : void {
+  public add (obj : DrawObject, option : MainAddOption, move? : (x: number, y :number) => Point) : void {
     obj.setDelay(option.delay || 0)
     obj.setColor(option.color)
+    if (move) {
+      obj.setMove(move)
+    }
     this.exec.push(obj)
   }
 
@@ -59,9 +63,5 @@ export default class Manager {
 
   public event (index : number) : void {
     this.exec[index].event()
-  }
-
-  public setLimit (limit : number) : void {
-    this.limit = limit
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-dupe-class-members */
-import EventParams from '../interface/EventParams'
 import MainAddOption from '../interface/MainAddOption'
+import Point from '../interface/Point'
 import Manager from '../Manager'
 import DrawObject from '../object/DrawObject'
 
@@ -16,9 +16,20 @@ export default abstract class AnimationMain {
     this.manager = new Manager()
   }
 
-  public abstract clickEvent (params : EventParams) : void
+  public action () : void
+  public action (params : Point) : void
+  public action (event: string | number) : void
+  public action (event: string | number, params : Point) : void
+  public action (value1?: string | number | Point, params? : Point) : void {
+    let event : string | number | undefined
+    const pm : Point | undefined = typeof value1 === 'object' ? value1 : params || undefined
+    if (typeof value1 !== 'object') {
+      event = value1
+    }
+    this.eventAciton(event, pm)
+  }
 
-  public abstract moveEvent (params : EventParams) : void
+  public abstract eventAciton (event?: number | string, params?: Point) : void
 
   public abstract paint (ctx : CanvasRenderingContext2D) : void
 
@@ -26,12 +37,21 @@ export default abstract class AnimationMain {
     return this.canvas
   }
 
-  protected add (obj : DrawObject, option? : MainAddOption) :void {
-    const op : MainAddOption = option || {}
+  public getCtx () : CanvasRenderingContext2D | null {
+    return this.ctx
+  }
+
+  protected add (obj : DrawObject) :void
+  protected add (obj : DrawObject, move :(x: number, y :number) => Point) :void
+  protected add (obj : DrawObject, option : MainAddOption) :void
+  protected add (obj : DrawObject, option : MainAddOption, move :(x: number, y :number) => Point) :void
+  protected add (obj : DrawObject, value? : MainAddOption | ((x: number, y :number) => Point), move? :(x: number, y :number) => Point) :void {
+    const op : MainAddOption = typeof value === 'object' ? value : {}
+    const mv : ((x: number, y :number) => Point) | undefined = typeof value !== 'object' ? value : move
     if (this.randomColor && !op.color) {
       op.color = this.randomColor[this.random(this.randomColor)]
     }
-    this.manager.add(obj, op)
+    this.manager.add(obj, op, mv)
   }
 
   protected random (array : Array<any>) : number
