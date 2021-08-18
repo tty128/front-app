@@ -161,8 +161,12 @@ export default class CardComponent extends Vue {
     position: absolute;
     top: 0;
     left: 0;
-    width: 195px;
-    height: 195px;
+    
+    width: inherit;
+    height: inherit;
+    //  width: 195px;
+    //  height: 195px;
+
     overflow: hidden;
 
     background: #8BC34A;
