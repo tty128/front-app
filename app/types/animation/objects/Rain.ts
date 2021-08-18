@@ -4,8 +4,8 @@ interface RainOption {
   speed? : number,
   speedDown? : number,
   lineWidth? : number,
-  color? : string,
-  alpha? : number
+  alpha? : number,
+  random? :boolean
 }
 
 export default class Rain extends DrawObject {
@@ -16,18 +16,25 @@ export default class Rain extends DrawObject {
   private speed : number = 5
   private speedDown : number = 5
   private lineWidth : number = 10
+  private random :boolean = true
 
   constructor (point: Array<number>)
   constructor (point: Array<number>, op : RainOption)
   constructor (point: Array<number>, op? : RainOption) {
     super(point)
     const init :RainOption = op || {}
-
-    this.speed = Math.floor(Math.random() * (init.speed || this.speed)) + 1
-    this.speedDown = Math.floor(Math.random() * (init.speedDown || this.speedDown)) + 2
-    this.lineWidth = Math.floor((Math.random() * (init.lineWidth || this.lineWidth))) + 1
-    this.alpha = init.alpha ? Math.floor((Math.random() * (init.alpha))) + 10 : this.alpha
-    this.color = init.color || this.color
+    const rand : boolean = typeof init.random === 'undefined' ? this.random : init.random
+    if (rand) {
+      this.speed = Math.floor(Math.random() * (init.speed || this.speed)) + 1
+      this.speedDown = Math.floor(Math.random() * (init.speedDown || this.speedDown)) + 2
+      this.lineWidth = Math.floor((Math.random() * (init.lineWidth || this.lineWidth))) + 1
+      this.alpha = init.alpha ? Math.floor((Math.random() * (init.alpha))) + 10 : this.alpha
+    } else {
+      this.speed = init.speed || this.speed
+      this.speedDown = init.speedDown || this.speedDown
+      this.lineWidth = init.lineWidth || this.lineWidth
+      this.alpha = init.alpha || this.alpha
+    }
   }
 
   public created (): void {}

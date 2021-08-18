@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="getPrefix + getId" class="card-design">
-    <AtomsLogo class="logo" />
+    <div class="card-design__logo"><AtomsLogo class="logo" /></div>
     <div :class="['card-design--wrapper', cardClass]">
       <!-- <AtomsImage :src="getImgUrl" /> -->
       <AtomsSkillLogo :logo-name="getEyecatch" />
@@ -96,6 +96,7 @@ export default class CardComponent extends Vue {
 
 <style lang="scss" scoped>
 .card-design{
+  background: none !important;
   position: relative;
   z-index: 1;
   display: block;
@@ -103,7 +104,6 @@ export default class CardComponent extends Vue {
   height: inherit;
 
   transition: all 0.3s;
-  overflow: hidden;
 
   text-decoration: none;
   &__img{
@@ -115,12 +115,14 @@ export default class CardComponent extends Vue {
   &:hover {
     z-index: 10;
     padding-top:60px;
+    padding-left:10px;
     .card-design--wrapper{
       // background-color: lighten(rgb(69, 79, 69),20%)!important;
       // background-color: lighten(#FF8A65,20%)!important;
       // color:rgb(50, 39, 39);
       // stroke: rgb(50, 39, 39);
       // fill:rgb(50, 39, 39);
+      box-shadow: 5px 5px 0px 0 #8BC34A;
       transition: all 0.5s ease-in-out;
     }
   }
@@ -153,6 +155,20 @@ export default class CardComponent extends Vue {
       content: ' ';
       transition: all 0.3s;
     }
+  }
+
+  &__logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 195px;
+    height: 195px;
+    overflow: hidden;
+
+    background: #8BC34A;
+    color: #322727;
+    fill: #322727;
+    stroke: #322727;
   }
 
   .card-design__info {
@@ -195,6 +211,5 @@ export default class CardComponent extends Vue {
       margin-bottom: auto;
     }
   }
-
 }
 </style>

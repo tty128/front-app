@@ -7,17 +7,18 @@
       />
     </header>
     <main id="Main" class="cl-base--r">
-      <aside id="MainNav">
-        <OrganismsNavigationUL />
-      </aside>
+      <nav id="MainNav">
+        <OrganismsNavigationUL :is-current="true" id="Canvas-mouse-on" class="nav flex--s-s flex--dc" />
+      </nav>
       <Nuxt id="Content" />
       <canvas id="Canvas" :width="window.width" :height="window.height" />
     </main>
     <footer id="Footer">
       <OrganismsDefaultFooter
-        class="cl-base flex--s-s flex--dc"
+        class="footer cl-base flex--s-s flex--dc"
         :app-name="getAppName"
       />
+      <div id="Back-ground"><img src="/background0.png" width="100" height="100"/></div>
     </footer>
   </div>
 </template>
@@ -62,10 +63,20 @@ export default class DefaultLayoutComponent extends Vue {
     document.body.addEventListener('click', () => {
       cvs.action('click', { x: this.mouseX, y: this.mouseY })
     })
+    const mouseOnElements : NodeListOf<HTMLElement> = document.body.querySelectorAll('#Canvas-mouse-on li') as NodeListOf<HTMLElement>
+    mouseOnElements.forEach((el : HTMLElement) => {
+      const cr = el.getBoundingClientRect()
+      el.addEventListener('mouseover', () => {
+        cvs.action('mouseover', { x: 30 + cr.left, y: el.clientHeight / 2 + cr.top })
+      })
+      el.addEventListener('mouseout', () => {
+        cvs.action('mouseout')
+      })
+    })
     const run = () => {
       cvs.start()
       this.window.width = document.body.clientWidth
-      this.window.height = document.body.clientWidth
+      this.window.height = document.body.clientHeight
       try {
         this.animationId = window.requestAnimationFrame(run)
       } catch {
@@ -90,21 +101,66 @@ body {
   z-index: 100;
   width: 100%;
   opacity: 0.9;
+  font-family: 'Righteous', cursive;
 }
 #Footer {
+  position: relative;
   margin-top: auto;
+  .footer {
+    position: relative;
+    z-index: 10;
+    mix-blend-mode: multiply;
+  }
+  #Back-ground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(#FFF,0.75);
+      content: "";
+    }
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 #Main{
+  object-fit: cover;
+
   position: relative;
   z-index: 50;
   display: flex;
   width: 100%;
   // overflow: hidden;
+
+  .nav {
+    position: sticky;
+    top: 2rem;
+    list-style: none;
+    padding:0 2rem;
+    font-size: 3rem;
+    font-family: 'Righteous', cursive;
+    a{text-decoration: none;}
+    a.current {
+      color:#8BC34A;
+    }
+  }
 }
 #MainNav {
   position: relative;
   z-index: 10;
-  max-width: 150px;
+  max-width: 250px;
   flex-grow: 1;
   @media screen and (max-width:1024px)  {
     display: none;
@@ -121,10 +177,6 @@ body {
   @media screen and (max-width:780px)  {
     width: 90%;
     margin: 2rem auto;
-    // > div {
-    //   width: 100%;
-    //   margin-right: 0 !important;
-    // }
   }
 }
 #Canvas {

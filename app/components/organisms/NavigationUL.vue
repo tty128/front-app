@@ -7,6 +7,7 @@
     >
       <NuxtLink
         :to="'/' + path"
+        :class="'/' + path === $route.path && isCurrent ? 'current' : ''"
       >
         {{ path.toUpperCase() }}
       </NuxtLink>
@@ -20,6 +21,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component
 export default class NavigationULComponent extends Vue {
   @Prop({ type: String, default: '' }) readonly liClass ! : string
+  @Prop({ type: Boolean, default: false }) readonly isCurrent ! : boolean
   public paths : object = [
     'about',
     'blog',

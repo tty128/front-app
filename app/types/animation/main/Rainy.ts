@@ -4,6 +4,9 @@ import Point from '../src/interface/Point'
 import AnimationLayerMain from '../src/main/AnimationLayerMain'
 
 export default class Rainy extends AnimationLayerMain {
+  private isMouseover : boolean = false
+  private mousePoint : Point = { x: 0, y: 0 }
+  private counter : number = 0
   protected randomColor: string[] | null = [
     '210, 210, 210',
     '255, 255, 255',
@@ -46,6 +49,11 @@ export default class Rainy extends AnimationLayerMain {
         const py = y + absY / 2 - this.random(absY)
         this.add(new Rain([px, py], { speed: 3 }))
         this.add(new Rain([px, py], { speed: 3 }), { delay: 10 })
+      } else if (event === 'mouseover') {
+        this.mousePoint = { x, y }
+        this.isMouseover = true
+      } else if (event === 'mouseout') {
+        this.isMouseover = false
       }
     }
   }
@@ -59,6 +67,12 @@ export default class Rainy extends AnimationLayerMain {
       const randX : number = this.random(this.getCanvas().width)
       const randY : number = this.random(this.getCanvas().height)
       this.add(new Rain([randX, randY]))
+    }
+
+    if (this.isMouseover && this.counter++ > 40) {
+      const op = { speed: 2, lineWidth: 15, random: false }
+      this.add(new Rain([this.mousePoint.x!, this.mousePoint.y!], op), { color: '156, 204, 101' })
+      this.counter = 0
     }
   }
 }
