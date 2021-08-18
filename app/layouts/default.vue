@@ -11,7 +11,7 @@
         <OrganismsNavigationUL />
       </aside>
       <Nuxt id="Content" />
-      <canvas id="Canvas" width="1500" height="1200" />
+      <canvas id="Canvas" :width="window.width" :height="window.height" />
     </main>
     <footer id="Footer">
       <OrganismsDefaultFooter
