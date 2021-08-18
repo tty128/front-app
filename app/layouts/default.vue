@@ -23,30 +23,36 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import Rainy from '../types/animation/main/Rainy2'
+import { Vue, Component, ProvideReactive } from 'vue-property-decorator'
+import Rainy from '../types/animation/main/Rainy'
+import AnimationLayerMain from '../types/animation/src/main/AnimationLayerMain'
 
 @Component
 export default class DefaultLayoutComponent extends Vue {
+  @ProvideReactive() cvs : AnimationLayerMain | null = null
   appName : string = 'Portfolio'
   protected get getAppName () : string { return this.appName }
+  protected window = {
+    width: 1500,
+    height: 1200
+  }
+
   private mouseX :number = 0
   private mouseY :number = 0
   private counter :number = 0
   private animationId :number = 0
 
   mounted () {
-    const canvas : HTMLCanvasElement = document.getElementById('Canvas') as HTMLCanvasElement
-    const cvs = new Rainy(canvas)
+    const canvas = document.getElementById('Canvas') as HTMLCanvasElement
+    const cvs = this.cvs = new Rainy(canvas)
     document.body.addEventListener('mousemove', (e) => {
       const speed : number = 10
       const x : number = e.clientX
       const y : number = e.clientY
-
       if (Math.abs(this.mouseX - x) + Math.abs(this.mouseY - y) > speed) {
         this.counter++
         if ((this.counter % 2) === 0) {
-          cvs.moveEvent({ x, y })
+          cvs.action('move', { x, y })
           this.counter = 0
         }
       }
@@ -54,10 +60,12 @@ export default class DefaultLayoutComponent extends Vue {
       this.mouseY = y
     })
     document.body.addEventListener('click', () => {
-      cvs.clickEvent({ x: this.mouseX, y: this.mouseY })
+      cvs.action('click', { x: this.mouseX, y: this.mouseY })
     })
     const run = () => {
       cvs.start()
+      this.window.width = document.body.clientWidth
+      this.window.height = document.body.clientWidth
       try {
         this.animationId = window.requestAnimationFrame(run)
       } catch {
