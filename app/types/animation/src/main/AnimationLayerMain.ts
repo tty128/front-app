@@ -86,8 +86,7 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   }
 
   protected changeFocusLayer (id?: number) : void {
-    const layerId = id || this.layers[0].id
-    const changeLayer : Layer | undefined = this.layers.find((layer: Layer) => layer.id === layerId)
+    const changeLayer : Layer | undefined = id ? this.layers.find((layer: Layer) => layer.id === id) : this.layers[0]
     if (changeLayer) {
       this.focusLayer = changeLayer
     }
