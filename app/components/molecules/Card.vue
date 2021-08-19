@@ -1,6 +1,9 @@
 <template>
   <NuxtLink :to="getPrefix + getId" class="card-design">
-    <div class="card-design__logo"><AtomsLogo class="logo" /></div>
+    <div class="card-design__logo">
+      <span class="dialog">{{ getDialog }}</span>
+      <AtomsLogo class="logo" />
+    </div>
     <div :class="['card-design--wrapper', cardClass]">
       <!-- <AtomsImage :src="getImgUrl" /> -->
       <AtomsSkillLogo :logo-name="getEyecatch" />
@@ -91,6 +94,24 @@ export default class CardComponent extends Vue {
   protected get getEyecatch () : string {
     return this.eyecatch
   }
+
+  protected get getDialog () : string {
+    const dialog : Array<string> = [
+      'Hi!',
+      'Hello',
+      'Yeah!',
+      'hmm',
+      'OMG',
+      'Thank You',
+      'Welcome!',
+      'Lucky',
+      'BIG BOUNS',
+      "Let's GO!",
+      'Zzz...'
+    ]
+    const rand :number = Math.floor(Math.random() * (dialog.length))
+    return dialog[rand]
+  }
 }
 </script>
 
@@ -140,6 +161,7 @@ export default class CardComponent extends Vue {
 .card-design {
   &--wrapper{
     position: relative;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +183,7 @@ export default class CardComponent extends Vue {
     position: absolute;
     top: 0;
     left: 0;
-    
+
     width: inherit;
     height: inherit;
     //  width: 195px;
@@ -173,6 +195,20 @@ export default class CardComponent extends Vue {
     color: #322727;
     fill: #322727;
     stroke: #322727;
+
+    .dialog {
+      z-index: 10;
+      position: relative;
+      display: inline-block;
+      width: 67px;
+      word-break: break-word;
+      margin: 0.5rem 1rem;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      font-family: "Righteous", cursive;
+      color: white;
+
+    }
   }
 
   .card-design__info {

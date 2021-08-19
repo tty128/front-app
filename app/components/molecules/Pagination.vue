@@ -39,17 +39,19 @@
     <!-- FirstPage Button End -->
 
     <!-- Page Button -->
-    <li>
-      <AtomsAddOrPutQuery
-        v-for="n in (getViewPage * 2 + 1)"
-        :key="parseInt($route.query.page || '1') + n - getViewPage - 1"
-        :query="getNextQuery(parseInt($route.query.page || '1') , n - getViewPage - 1)"
-        :event-on="isEventOn(parseInt($route.query.page || '1') , n - getViewPage - 1) && n - getViewPage - 1 !== 0"
-        :class="getClassName(parseInt($route.query.page || '1') , n - getViewPage - 1)"
-      >
-        {{ parseInt($route.query.page || '1') + n - getViewPage - 1 }}
-      </AtomsAddOrPutQuery>
-    </li>
+    <transition :name="getTransitionName" mode="out-in">
+      <li :key="$route.query.page || 1">
+        <AtomsAddOrPutQuery
+          v-for="n in (getViewPage * 2 + 1)"
+          :key="parseInt($route.query.page || '1') + n - getViewPage - 1"
+          :query="getNextQuery(parseInt($route.query.page || '1') , n - getViewPage - 1)"
+          :event-on="isEventOn(parseInt($route.query.page || '1') , n - getViewPage - 1) && n - getViewPage - 1 !== 0"
+          :class="getClassName(parseInt($route.query.page || '1') , n - getViewPage - 1)"
+        >
+          {{ parseInt($route.query.page || '1') + n - getViewPage - 1 }}
+        </AtomsAddOrPutQuery>
+      </li>
+    </transition>
     <!-- Page Button End-->
 
     <!-- LastPage Button -->
@@ -97,7 +99,17 @@ export default class PaginationComponent extends Vue {
   @Prop() readonly pages ! : number | Array<object>
   @Prop({ type: Number, default: 2 }) readonly viewPage ! : number
   @Prop({ type: String, default: 'button--color' }) readonly buttonClass ! :string
+  @Prop({ type: String }) readonly currentColor ? :string
   @PropSync('limit', { type: Number, default: 12 }) SyncedLimit ! : number
+
+  protected page : number = 1
+
+  protected get getTransitionName () : string {
+    const routeQuery : number = +this.$route.query.page || 1
+    const name : string = this.page > +this.$route.query.page ? 'paginate--slide-right' : 'paginate--slide-left'
+    this.page = routeQuery
+    return name
+  }
 
   protected get getPages () : number {
     let num :number
@@ -131,7 +143,12 @@ export default class PaginationComponent extends Vue {
   protected getClassName (current: number | boolean, diff?: number) : Array<string> {
     const array : Array<string> = ['pagination__button', this.buttonClass]
     if (typeof current === 'number') {
-      if (diff === 0) { array.push('--current') }
+      if (diff === 0) {
+        array.push('--current')
+        if (this.currentColor) {
+          array.push(this.currentColor)
+        }
+      }
       if (!this.isEventOn(current, diff || 0)) { array.push('--invisible') }
     } else if (!current) { array.push('--invisible') }
 
@@ -148,6 +165,7 @@ export default class PaginationComponent extends Vue {
   justify-content:center;
   width: auto;
   margin:0 auto;
+  margin-bottom: 2rem;
   padding:0;
 
   font-size: 1rem;
@@ -157,7 +175,10 @@ export default class PaginationComponent extends Vue {
       align-items: center;
       justify-content: center;
       width: auto;
+      max-width: 150px;
+      overflow: hidden;
 
+      font-family: 'Righteous', cursive;
       svg{
         width: 1.2rem;
         height: 1.2rem;
@@ -195,6 +216,39 @@ export default class PaginationComponent extends Vue {
         background: crimson;
         cursor: default !important;
     }
+    }
+  }
+}
+
+.paginate--slide {
+  $translate: 30px;
+  &-right, &-left {
+    &-enter-active, &-leave-active {
+      transition: all .5s;
+    }
+  }
+
+  &-right {
+    &-enter {
+      opacity: 0;
+      transform: translateX(-$translate);
+    }
+
+    &-leave-to {
+      opacity: 0;
+      transform: translateX($translate);
+    }
+  }
+
+  &-left {
+    &-enter {
+      opacity: 0;
+      transform: translateX($translate);
+    }
+
+    &-leave-to {
+      opacity: 0;
+      transform: translateX(-$translate);
     }
   }
 }

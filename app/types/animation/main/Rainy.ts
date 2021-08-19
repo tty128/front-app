@@ -5,6 +5,7 @@ import AnimationLayerMain from '../src/main/AnimationLayerMain'
 
 export default class Rainy extends AnimationLayerMain {
   private isMouseover : boolean = false
+  private mouseoverColor : string = '156, 204, 101'
   private mousePoint : Point = { x: 0, y: 0 }
   private counter : number = 0
   protected randomColor: string[] | null = [
@@ -49,11 +50,20 @@ export default class Rainy extends AnimationLayerMain {
         const py = y + absY / 2 - this.random(absY)
         this.add(new Rain([px, py], { speed: 3 }))
         this.add(new Rain([px, py], { speed: 3 }), { delay: 10 })
-      } else if (event === 'mouseover') {
+      } else if (event === 'navigation' || event === 'pagination') {
         this.mousePoint = { x, y }
+        this.mouseoverColor = '156, 204, 101'
         this.isMouseover = true
       } else if (event === 'mouseout') {
         this.isMouseover = false
+      } else if (event === 'pagination--current') {
+        this.mousePoint = { x, y }
+        this.mouseoverColor = '255, 138, 101'
+        this.isMouseover = true
+      } else if (event === 'navigation--current') {
+        this.mousePoint = { x, y }
+        this.mouseoverColor = '255, 255, 255'
+        this.isMouseover = true
       }
     }
   }
@@ -72,7 +82,7 @@ export default class Rainy extends AnimationLayerMain {
 
     if (this.isMouseover && this.counter++ > 40) {
       const op = { speed: 2, lineWidth: 15, random: false }
-      this.add(new Rain([this.mousePoint.x!, this.mousePoint.y!], op), { color: '156, 204, 101' })
+      this.add(new Rain([this.mousePoint.x!, this.mousePoint.y!], op), { color: this.mouseoverColor })
       this.counter = 0
     }
   }

@@ -71,17 +71,6 @@ export default class BlogPageIDComponent extends Vue {
     })
     return array
   }
-  
-  transition (to: any, from: any) {
-    if (!from) {
-      return 'anime--slide-left'
-    } else if (to.path === from.path) {
-      const toQuery = to.query.page ? to.query.page : 0
-      return +toQuery < +from.query.page ? 'anime--slide-right' : 'anime--slide-left'
-    } else {
-      return 'anime--slide-up'
-    }
-  }
 }
 </script>
 

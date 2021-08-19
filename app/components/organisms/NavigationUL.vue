@@ -3,11 +3,11 @@
     <li
       v-for="path in paths"
       :key="path"
-      :class="['navigationUL__item',getLiClass]"
+      :class="['navigationUL__item', getLiClass, getRouteMatch(path) ? '--current' : '']"
     >
       <NuxtLink
         :to="'/' + path"
-        :class="'/' + path === $route.path && isCurrent ? 'current' : ''"
+        :class="getRouteMatch(path) && isCurrent ? '--current' : ''"
       >
         {{ path.toUpperCase() }}
       </NuxtLink>
@@ -27,6 +27,11 @@ export default class NavigationULComponent extends Vue {
     'blog',
     'taxonomy'
   ]
+
+  protected getRouteMatch (path :string) :boolean {
+    const re = '^/' + path
+    return new RegExp(re).test(this.$route.fullPath)
+  }
 
   protected get getLiClass () : string { return this.liClass }
 }

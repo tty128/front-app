@@ -27,10 +27,12 @@
 import { Vue, Component, ProvideReactive } from 'vue-property-decorator'
 import Rainy from '../types/animation/main/Rainy'
 import AnimationLayerMain from '../types/animation/src/main/AnimationLayerMain'
+import AnimationMain from '../types/animation/src/main/AnimationMain'
 
 @Component
 export default class DefaultLayoutComponent extends Vue {
-  @ProvideReactive() cvs : AnimationLayerMain | null = null
+  @ProvideReactive() cvs? : AnimationLayerMain | AnimationMain
+
   appName : string = 'Portfolio'
   protected get getAppName () : string { return this.appName }
   protected window = {
@@ -65,9 +67,10 @@ export default class DefaultLayoutComponent extends Vue {
     })
     const mouseOnElements : NodeListOf<HTMLElement> = document.body.querySelectorAll('#Canvas-mouse-on li') as NodeListOf<HTMLElement>
     mouseOnElements.forEach((el : HTMLElement) => {
-      const cr = el.getBoundingClientRect()
       el.addEventListener('mouseover', () => {
-        cvs.action('mouseover', { x: 30 + cr.left, y: el.clientHeight / 2 + cr.top })
+        const cr = el.getBoundingClientRect()
+        const ind = el.className.split(' ').indexOf('--current')
+        cvs.action('navigation' + (ind >= 0 ? '--current' : ''), { x: 30 + cr.left, y: el.clientHeight / 2 + cr.top })
       })
       el.addEventListener('mouseout', () => {
         cvs.action('mouseout')
@@ -152,7 +155,7 @@ body {
     font-size: 3rem;
     font-family: 'Righteous', cursive;
     a{text-decoration: none;}
-    a.current {
+    a.--current {
       color:#8BC34A;
     }
   }

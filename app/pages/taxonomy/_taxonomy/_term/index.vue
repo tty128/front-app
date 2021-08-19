@@ -4,9 +4,9 @@
       {{ taxonomy }} : {{ term }}
     </h2>
     <div v-if="data.length > 0" class="wrapper">
-      <MoleculesPagination :pages="data" button-class="cl-secoundary" />
+      <MoleculesPagination :pages="data" button-class="cl-secoundary" current-color="cl-accent" />
       <OrganismsCardSort class="blog-list__items flex--s"  li-class="cl-white" a-class="cl-primary" card-class="cl-white" :data="dataSlice(data,parseInt($route.query.page || 1))" />
-      <MoleculesPagination :pages="data" button-class="cl-secoundary" />
+      <MoleculesPagination :pages="data" button-class="cl-secoundary" current-color="cl-accent" />
     </div>
     <p v-else class="flex--c">
       アイテムがありません。
@@ -15,10 +15,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, InjectReactive } from 'nuxt-property-decorator'
+import AnimationLayerMain from '~/app/types/animation/src/main/AnimationLayerMain'
+import AnimationMain from '~/app/types/animation/src/main/AnimationMain'
 
 @Component
 export default class TaxonomyTermComponent extends Vue {
+  @InjectReactive() cvs? : AnimationLayerMain | AnimationMain
   async asyncData ({ params, $axios }: { params: any, $axios: any}) {
     const data = await $axios.$get(`/api/term-taxonomy/${params.taxonomy}/${params.term}`)
     const { taxonomy, term } = params
@@ -35,6 +38,25 @@ export default class TaxonomyTermComponent extends Vue {
     } else {
       return 'anime--slide-down'
     }
+  }
+
+  mounted () {
+    const mouseOnElements : NodeListOf<HTMLElement> = document.body.querySelectorAll('.pagination__button') as NodeListOf<HTMLElement>
+    mouseOnElements.forEach((el : HTMLElement) => {
+      el.addEventListener('mouseover', () => {
+        const ind = el.className.split(' ').indexOf('--current')
+        const cr = el.getBoundingClientRect()
+
+        if (this.cvs) {
+          this.cvs.action('pagination' + (ind >= 0 ? '--current' : ''), { x: el.clientWidth / 2 + cr.left, y: el.clientHeight / 2 + cr.top })
+        }
+      })
+      el.addEventListener('mouseout', () => {
+        if (this.cvs) {
+          this.cvs.action('mouseout')
+        }
+      })
+    })
   }
 }
 </script>
