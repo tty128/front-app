@@ -70,13 +70,16 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   protected copyLayer (to: number) : void
   protected copyLayer (id:number, to: number) : void
   protected copyLayer (value?: number, to?:number) : void {
-    let toIndex : number | undefined = to
+    let toIndex : number
     let manager : Manager
-    if (value) {
-      toIndex = to || value
-      manager = to ? this.layers[value].manager : this.focusLayer.manager
+    if (to) {
+      toIndex = to
+      const findex = this.layers.findIndex((layer: Layer) => layer.id === value)
+      manager = findex !== -1 ? this.layers[findex].manager : this.focusLayer.manager
 
       this.addLayer(manager, toIndex)
+    } else if (value) {
+      this.addLayer(this.focusLayer.manager, value)
     } else {
       this.addLayer(this.focusLayer.manager)
     }
