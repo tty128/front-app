@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-class-members */
 
 import Config from '../../Config'
 import Point from '../interface/Point'
@@ -85,5 +86,41 @@ export default abstract class DrawObject {
 
   public isEnd () : boolean {
     return this.end
+  }
+
+  protected arcFillAntiAlias (ctx: CanvasRenderingContext2D, antiAliasOption : { strength :number, color?: string, alpha? :number }, x: number, y: number, radius: number, startAngle: number, endAngle: number, counterclockwise?: boolean) : void {
+    const span = 2
+    const alpha : number = antiAliasOption.alpha || 1
+    const color : string = antiAliasOption.color || '0,0,0'
+    const strength : number = antiAliasOption.strength
+    const splitAlpha : number = alpha / strength
+    for (let i = 0; i < strength; i++) {
+      ctx.arc(x - ((span / 2) * i), y - ((span / 2) * i), radius - (span * i), startAngle, endAngle, counterclockwise)
+      ctx.fillStyle = 'rgba(' + color + ',' + (splitAlpha * (i + 1)) + ')'
+    }
+  }
+
+  protected arcStrokeAntiAlias (ctx: CanvasRenderingContext2D, antiAliasOption: { strength: number, lineWidth?: number, color?: string, alpha?: number }, x: number, y: number, radius: number, startAngle: number, endAngle: number, counterclockwise?: boolean) : void {
+    const alpha : number = antiAliasOption.alpha || 1
+    const color : string = antiAliasOption.color || '0,0,0'
+    const strength : number = antiAliasOption.strength
+    const lineWidth : number = antiAliasOption.lineWidth || 1
+    const splitAlpha : number = alpha / strength
+    for (let i = 0; i < strength; i++) {
+      ctx.arc(x, y, radius, startAngle, endAngle, counterclockwise)
+      ctx.lineWidth = lineWidth / strength
+      ctx.strokeStyle = 'rgba(' + color + ',' + (splitAlpha * (i + 1)) + ')'
+    }
+  }
+
+  protected random (array : Array<any>) : number
+  protected random (max : number) : number
+  protected random (max : number, min :number) : number
+  protected random (val1 : number | Array<any>, min? :number) : number {
+    if (Array.isArray(val1)) {
+      return Math.floor(Math.random() * val1.length)
+    } else {
+      return Math.floor(Math.random() * val1) + (min || 0)
+    }
   }
 }
