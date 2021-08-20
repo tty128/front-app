@@ -65,12 +65,12 @@ export default abstract class AnimationMain {
     }
   }
 
-  public start () : void {
+  public start (correctionX?: number, correctionY?: number) : void {
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.paint(this.ctx)
       if (this.manager.objectExists()) {
-        this.manager.action(this.ctx)
+        this.manager.action(this.ctx, correctionX || 0, correctionY || 0)
       }
     }
   }

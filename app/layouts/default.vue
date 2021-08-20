@@ -77,9 +77,10 @@ export default class DefaultLayoutComponent extends Vue {
       })
     })
     const run = () => {
-      cvs.start()
-      this.window.width = document.body.clientWidth
-      this.window.height = document.body.clientHeight
+      const weighting : number = 250
+      this.window.width = document.body.clientWidth + weighting
+      this.window.height = window.innerHeight + weighting
+      cvs.start(weighting, weighting)
       try {
         this.animationId = window.requestAnimationFrame(run)
       } catch {
@@ -185,8 +186,8 @@ body {
 #Canvas {
   position: fixed;
   z-index: 1;
-  top:0;
-  left: 0;
+  top:-250px;
+  left:-250px;
 }
 
 .page-enter-active,

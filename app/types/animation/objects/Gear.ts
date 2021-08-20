@@ -15,14 +15,14 @@ export default class Gear extends DrawObject {
 
   private speed : number = 5
   private size : number = 5
-  private random : boolean = false
+  private randomOn : boolean = false
 
   constructor (point: Array<number>)
   constructor (point: Array<number>, op : GearOption)
   constructor (point: Array<number>, op? : GearOption) {
     super(point)
     const init :GearOption = op || {}
-    const rand = op?.random ? op.random : this.random
+    const rand = op?.random ? op.random : this.randomOn
     if (rand) {
       this.speed = Math.floor(Math.random() * (init.speed || this.speed)) + 1
       this.size = Math.floor((Math.random() * (init.size || this.size))) + 1

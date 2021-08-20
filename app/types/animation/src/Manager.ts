@@ -17,15 +17,15 @@ export default class Manager {
     return this.exec.length
   }
 
-  public action (ctx : CanvasRenderingContext2D) : void {
+  public action (ctx : CanvasRenderingContext2D, correctionX: number, correctionY: number) : void {
     this.destroyIndex = []
     this.actionIndex = []
     this.exec.forEach((obj : DrawObject, index : number) => {
       const delay = obj.getDelay()
       if (delay <= 0) {
-        if (obj.action(ctx)) { this.actionIndex.push(index) }
+        if (obj.action(ctx, correctionX, correctionY)) { this.actionIndex.push(index) }
         this.actionIndex.forEach((i : number) => { this.event(i) })
-        if (obj.destroy()) { this.destroyIndex.push(index) }
+        if (obj.destroy(ctx)) { this.destroyIndex.push(index) }
       } else {
         obj.setDelay(delay - 1)
       }
@@ -51,6 +51,7 @@ export default class Manager {
   public add (obj : DrawObject, option : MainAddOption, move? : (x: number, y :number) => Point) : void {
     obj.setDelay(option.delay || 0)
     obj.setColor(option.color)
+    obj.setUseCorrection(typeof option.useCorrection === 'boolean' ? option.useCorrection : true)
     if (move) {
       obj.setMove(move)
     }

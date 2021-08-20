@@ -1,4 +1,5 @@
 export default interface MainAddOption {
-delay? :number,
-color? :string
+  delay? :number,
+  color? :string,
+  useCorrection? :boolean
 }

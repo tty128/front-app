@@ -46,9 +46,9 @@ export default class TaxonomyTermComponent extends Vue {
       el.addEventListener('mouseover', () => {
         const ind = el.className.split(' ').indexOf('--current')
         const cr = el.getBoundingClientRect()
-
+        const border :number = 2
         if (this.cvs) {
-          this.cvs.action('pagination' + (ind >= 0 ? '--current' : ''), { x: el.clientWidth / 2 + cr.left, y: el.clientHeight / 2 + cr.top })
+          this.cvs.action('pagination' + (ind >= 0 ? '--current' : ''), { x: el.clientWidth / 2 + cr.left + border, y: el.clientHeight / 2 + cr.top + border })
         }
       })
       el.addEventListener('mouseout', () => {

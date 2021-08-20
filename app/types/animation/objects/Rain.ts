@@ -16,14 +16,14 @@ export default class Rain extends DrawObject {
   private speed : number = 5
   private speedDown : number = 5
   private lineWidth : number = 10
-  private random :boolean = true
+  private randomOn :boolean = true
 
   constructor (point: Array<number>)
   constructor (point: Array<number>, op : RainOption)
   constructor (point: Array<number>, op? : RainOption) {
     super(point)
     const init :RainOption = op || {}
-    const rand : boolean = typeof init.random === 'undefined' ? this.random : init.random
+    const rand : boolean = typeof init.random === 'undefined' ? this.randomOn : init.random
     if (rand) {
       this.speed = Math.floor(Math.random() * (init.speed || this.speed)) + 1
       this.speedDown = Math.floor(Math.random() * (init.speedDown || this.speedDown)) + 2
@@ -39,9 +39,9 @@ export default class Rain extends DrawObject {
 
   public created (): void {}
 
-  public paint (ctx: CanvasRenderingContext2D): void {
-    const x = this.x || 0
-    const y = this.y || 0
+  public paint (ctx: CanvasRenderingContext2D, positionX :number, positionY:number): void {
+    const x = positionX
+    const y = positionY
     ctx.beginPath()
     ctx.arc(x, y, this.radius, 0, 2 * Math.PI, false)
     ctx.lineWidth = this.lineWidth

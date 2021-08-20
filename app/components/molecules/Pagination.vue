@@ -197,7 +197,8 @@ export default class PaginationComponent extends Vue {
     width: auto;
     min-width: 1.5rem;
     height: 2.5rem;
-    border-radius:1.25rem;
+    border: solid 0.2rem white;
+    border-radius:1.45rem;
     margin:0 0.2rem;
     padding:0 0.5rem;
     transition: all 0.3s;
