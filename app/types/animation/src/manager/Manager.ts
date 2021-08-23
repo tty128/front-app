@@ -1,7 +1,7 @@
-import Config from '../Config'
-import MainAddOption from './interface/MainAddOption'
-import Point from './interface/Point'
-import DrawObject from './object/DrawObject'
+import Config from '../../Config'
+import MainAddOption from '../interface/MainAddOption'
+import Point from '../interface/Point'
+import DrawObject from '../object/DrawObject'
 
 export default class Manager {
   private exec : Array<DrawObject> = []

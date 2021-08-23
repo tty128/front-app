@@ -14,10 +14,9 @@ export default abstract class DrawObject {
   protected useCorrection : boolean = true
 
   constructor ()
-  constructor (x : Array<number>)
-  constructor (x : number)
+  constructor (x : Array<number> | number | Point)
   constructor (x : number, y : number)
-  constructor (val1? :number | Array<number>, val2? :number) {
+  constructor (val1? :Array<number> | number | Point, val2? :number) {
     if (Array.isArray(val1)) {
       if (val1.length >= 2) {
         this.x = val1[0]
@@ -32,6 +31,9 @@ export default abstract class DrawObject {
       } else {
         this.x = this.y = val1
       }
+    } else if (typeof val1 === 'object') {
+      this.x = val1.x || 0
+      this.y = val1.y || this.x
     }
   }
 
@@ -93,31 +95,6 @@ export default abstract class DrawObject {
 
   public isEnd () : boolean {
     return this.end
-  }
-
-  protected arcFillAntiAlias (ctx: CanvasRenderingContext2D, antiAliasOption : { strength :number, color?: string, alpha? :number }, x: number, y: number, radius: number, startAngle: number, endAngle: number, counterclockwise?: boolean) : void {
-    const span = 2
-    const alpha : number = antiAliasOption.alpha || 1
-    const color : string = antiAliasOption.color || '0,0,0'
-    const strength : number = antiAliasOption.strength
-    const splitAlpha : number = alpha / strength
-    for (let i = 0; i < strength; i++) {
-      ctx.arc(x - ((span / 2) * i), y - ((span / 2) * i), radius - (span * i), startAngle, endAngle, counterclockwise)
-      ctx.fillStyle = 'rgba(' + color + ',' + (splitAlpha * (i + 1)) + ')'
-    }
-  }
-
-  protected arcStrokeAntiAlias (ctx: CanvasRenderingContext2D, antiAliasOption: { strength: number, lineWidth?: number, color?: string, alpha?: number }, x: number, y: number, radius: number, startAngle: number, endAngle: number, counterclockwise?: boolean) : void {
-    const alpha : number = antiAliasOption.alpha || 1
-    const color : string = antiAliasOption.color || '0,0,0'
-    const strength : number = antiAliasOption.strength
-    const lineWidth : number = antiAliasOption.lineWidth || 1
-    const splitAlpha : number = alpha / strength
-    for (let i = 0; i < strength; i++) {
-      ctx.arc(x, y, radius, startAngle, endAngle, counterclockwise)
-      ctx.lineWidth = lineWidth / strength
-      ctx.strokeStyle = 'rgba(' + color + ',' + (splitAlpha * (i + 1)) + ')'
-    }
   }
 
   protected random (array : Array<any>) : number

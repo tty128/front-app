@@ -74,6 +74,7 @@ export default class Rainy extends AnimationLayerMain {
     }
   }
 
+  private testcounter : number = 0
   public init (): void {
     this.addLayer(1)
     this.addLayer(2)

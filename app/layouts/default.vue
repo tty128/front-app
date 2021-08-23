@@ -8,7 +8,7 @@
     </header>
     <main id="Main" class="cl-base--r">
       <nav id="MainNav">
-        <OrganismsNavigationUL :is-current="true" id="Canvas-mouse-on" class="nav flex--s-s flex--dc" />
+        <OrganismsNavigationUL id="Canvas-mouse-on" :is-current="true" class="nav flex--s-s flex--dc" />
       </nav>
       <Nuxt id="Content" />
       <canvas id="Canvas" :width="window.width" :height="window.height" />

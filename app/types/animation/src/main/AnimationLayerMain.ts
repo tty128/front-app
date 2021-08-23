@@ -2,7 +2,7 @@
 import Config from '../../Config'
 import MainAddOption from '../interface/MainAddOption'
 import Point from '../interface/Point'
-import Manager from '../Manager'
+import Manager from '../manager/Manager'
 import DrawObject from '../object/DrawObject'
 import AnimationMain from './AnimationMain'
 

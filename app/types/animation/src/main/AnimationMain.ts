@@ -1,7 +1,7 @@
 /* eslint-disable no-dupe-class-members */
 import MainAddOption from '../interface/MainAddOption'
 import Point from '../interface/Point'
-import Manager from '../Manager'
+import Manager from '../manager/Manager'
 import DrawObject from '../object/DrawObject'
 
 export default abstract class AnimationMain {
