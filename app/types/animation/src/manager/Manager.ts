@@ -48,6 +48,10 @@ export default class Manager {
     return this.destroyIndex
   }
 
+  public setLimit (limit : number) : void {
+    this.limit = limit
+  }
+
   public add (obj : DrawObject, option : MainAddOption, move? : (x: number, y :number) => Point) : void {
     obj.setDelay(option.delay || 0)
     obj.setColor(option.color)

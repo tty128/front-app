@@ -5,9 +5,11 @@ import Manager from '../manager/Manager'
 import DrawObject from '../object/DrawObject'
 
 export default abstract class AnimationMain {
+  protected animationId : number = 0
   protected canvas : HTMLCanvasElement
   protected ctx : CanvasRenderingContext2D | null = null
   protected manager : Manager
+  protected correction : Point = { x: 0, y: 0 }
   protected abstract randomColor: Array<string> | null
 
   constructor (canvas : HTMLCanvasElement) {
@@ -65,13 +67,48 @@ export default abstract class AnimationMain {
     }
   }
 
-  public start (correctionX?: number, correctionY?: number) : void {
+  public setCorrection (correctX: number, correctY: number) : void {
+    this.correction.x = correctX
+    this.correction.y = correctY
+  }
+
+  public getCorrection () : Point {
+    return this.correction
+  }
+
+  public setAnimationId (id : number) : void {
+    this.animationId = id
+  }
+
+  public setCanvasSizeReactive () : void {
+    window.addEventListener('resize', () => {
+      this.canvas.width = document.body.clientWidth + this.getCorrection().x
+      this.canvas.height = window.innerHeight + this.getCorrection().y
+    })
+  }
+
+  public run () : void {
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.paint(this.ctx)
       if (this.manager.objectExists()) {
-        this.manager.action(this.ctx, correctionX || 0, correctionY || 0)
+        this.manager.action(this.ctx, this.correction.x, this.correction.y)
       }
+    }
+  }
+
+  public start () : void {
+    const loop = () => {
+      this.run()
+      this.setAnimationId(window.requestAnimationFrame(loop))
+    }
+    window.requestAnimationFrame(loop)
+  }
+
+  public stop () : void {
+    window.cancelAnimationFrame(this.animationId)
+    if (this.ctx) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     }
   }
 }

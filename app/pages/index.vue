@@ -12,6 +12,7 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 export default class RootPageComponent extends Vue {
   @Prop({ type: String, default: 'Portfolio' }) readonly appName ! : string;
   protected get getAppName (): string { return this.appName }
+
   transition () {
     return 'anime--slide-up'
   }

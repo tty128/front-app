@@ -1,5 +1,4 @@
 import DrawObject from '../../src/object/DrawObject'
-import Point from '../../src/interface/Point'
 import SnowChild from './src/SnowChild'
 import SnowOption from './src/SnowOption'
 
@@ -28,7 +27,6 @@ export default class Snow extends DrawObject {
   private speed : number = 3
   private style : number = 4
   private radian : number = 0
-  private reactive? : Point
   private fallSpeed : number = 2
   private childSpan : number = 80
   private childQuantity : number = 3
@@ -42,9 +40,8 @@ export default class Snow extends DrawObject {
     const childInit: SnowOption = {}
 
     this.speed = childInit.speed = init.speed || this.random(this.speed) + 2
-    this.size = childInit.size = init.size || this.random(init.maxSize || this.maxSize) + 1
+    this.size = childInit.size = init.size || this.random(init.maxSize || this.maxSize) + 2
     this.style = init.style || this.random(this.style)
-    this.reactive = childInit.reactive = init.reactive
     this.fallSpeed = childInit.fallSpeed = init.fallSpeed || this.fallSpeed
     this.alphaSubtraction = init.alphaSubtraction ? Math.floor((Math.random() * (init.alphaSubtraction))) + 10 : this.alphaSubtraction
 
@@ -75,20 +72,17 @@ export default class Snow extends DrawObject {
     })
   }
 
-  public paint (ctx: CanvasRenderingContext2D): void {
-    let x = this.x || 0
-    let y = this.y || 0
-    if (this.reactive) {
-      x = document.body.clientWidth * (this.reactive.x || 50) * 2 / 100
-      y = document.body.clientHeight * (this.reactive.y || 50) * 2 / 100
-    }
+  public paint (ctx: CanvasRenderingContext2D, positionX :number, positionY:number): void {
+    const x = positionX
+    const y = positionY
+
     const alpha = this.getAlpha()
 
     for (let i = 0; i < 6; i++) {
       const height :number = 15 * Math.sqrt(3)
       const width : number = 15
       ctx.save()
-      ctx.translate(x / 2, y / 2)
+      ctx.translate((x - this.x) + this.x / 2, (y - this.y) + this.y / 2)
       ctx.rotate((i * 60 + this.radian) * Math.PI / 180)
       ctx.scale(this.size / 10, this.size / 10)
       ctx.fillStyle = 'rgba(' + this.getColor() + ',' + this.getAlpha() + ')'
@@ -101,7 +95,7 @@ export default class Snow extends DrawObject {
 
     this.SnowChildren.forEach((child: SnowChild, index: number) => {
       if (Math.abs(this.turnCounter.counter.x) + Math.abs(this.turnCounter.counter.y) > this.childSpan * (index + 1)) {
-        child.paint(ctx)
+        child.paint(ctx, x - this.x, y - this.y)
       }
     })
 

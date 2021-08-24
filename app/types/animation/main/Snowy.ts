@@ -27,7 +27,7 @@ export default class Rainy extends AnimationLayerMain {
   ]
 
   private probability : { snow:number, umbrella:number } = {
-    snow: 2.5,
+    snow: 0.75,
     umbrella: 0.75
   }
 
@@ -48,8 +48,8 @@ export default class Rainy extends AnimationLayerMain {
           const speedY = speed / 2 - this.random(speed)
           const decelerateX = this.random(2)
           const decelerateY = this.random(2)
-          const directionX : number = speedX * (99 + decelerateX) / 100 > 0 ? 1 : -1
-          const directionY : number = speedY * (99 + decelerateY) / 100 > 0 ? 1 : -1
+          const directionX : number = speedX > 0 ? 1 : -1
+          const directionY : number = speedY > 0 ? 1 : -1
 
           this.add(3, new Snow([x * 2 + this.random(diffusion) * directionX, y * 2 + this.random(diffusion) * directionY], { maxSize: 2, speed: 4, alphaSubtraction: 40, childQuantity: 0 }), (x: number, y :number) => {
             const nx = x + speedX * (99 + decelerateX) / 100
@@ -93,12 +93,13 @@ export default class Rainy extends AnimationLayerMain {
   }
 
   public paint (_ctx : CanvasRenderingContext2D) : void {
-    const accuracy = 1000
-
-    const snowProbability : number = this.getCanvas().width / 1500 * this.probability.snow
+    const accuracy : number = 1000
+    const canvasWidth : number = this.getCanvas().width < 700 ? 700 : this.getCanvas().width
+    const ratio : number = canvasWidth / 1500
+    const snowProbability : number = ratio * this.probability.snow
     if (this.random(accuracy) > accuracy * (1 - (snowProbability / 100))) {
       const randX : number = this.random(window.innerWidth)
-      this.add(1, new Snow([randX * 2, 0]), { alpha: 0.7 })
+      this.add(1, new Snow([randX * 2, 0], { maxSize: 10 * ratio }), { alpha: 0.7 })
     }
 
     if (this.isMouseover && this.counter.mouseOver++ > 40) {

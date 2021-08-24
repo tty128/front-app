@@ -1,5 +1,4 @@
 import DrawObject from '../../../src/object/DrawObject'
-import Point from '../../../src/interface/Point'
 import SnowOption from './SnowOption'
 
 interface SnowChildOption {
@@ -20,7 +19,6 @@ export default class SnowChild extends DrawObject {
   private style : number = 0
   private radian : number = 0
   private fallSpeed : number = 2
-  private reactive? : Point
 
   constructor (point: Array<number>, op : SnowOption, childOption: SnowChildOption) {
     super(point)
@@ -29,7 +27,6 @@ export default class SnowChild extends DrawObject {
     this.speed = init.speed || this.random(this.speed) + 0.5
     this.size = init.size || this.random(this.size) + 10
     this.style = init.style || this.style
-    this.reactive = init.reactive
     this.fallSpeed = init.fallSpeed || this.fallSpeed
 
     this.parentTurnCounter.x = childOption.turnCounter.x
@@ -39,19 +36,15 @@ export default class SnowChild extends DrawObject {
 
   public created (): void {}
 
-  public paint (ctx: CanvasRenderingContext2D): void {
-    let x = this.x || 0
-    let y = this.y || 0
-    if (this.reactive) {
-      x = document.body.clientWidth * (this.reactive.x || 50) * 2 / 100
-      y = document.body.clientHeight * (this.reactive.y || 50) * 2 / 100
-    }
+  public paint (ctx: CanvasRenderingContext2D, positionX :number, positionY:number): void {
+    const x = positionX
+    const y = positionY
 
     for (let i = 0; i < 6; i++) {
       const height :number = 15 * Math.sqrt(3)
       const width : number = 15
       ctx.save()
-      ctx.translate(x / 2, y / 2)
+      ctx.translate(x + this.x / 2, y + this.y / 2)
       ctx.rotate((i * 60 + this.radian) * Math.PI / 180)
       ctx.scale(this.size / 10, this.size / 10)
       this.crystal(this.style, ctx, width, height)

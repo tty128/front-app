@@ -6,17 +6,19 @@
         :app-name="getAppName"
       />
     </header>
-    <main id="Main" class="cl-base--r">
+    <main id="Main" class="main cl-base--r">
       <nav id="MainNav">
         <OrganismsNavigationUL id="Canvas-mouse-on" :is-current="true" class="nav flex--s-s flex--dc" />
       </nav>
       <Nuxt id="Content" />
-      <canvas id="Canvas" :width="window.width" :height="window.height" />
+      <canvas id="Canvas" width="1500" height="1200" />
     </main>
     <footer id="Footer">
+      <AtomsLogo v-if="getRandomMode === 1" class="main__logo" logo="Snowy" />
       <OrganismsDefaultFooter
         class="footer cl-base flex--s-s flex--dc"
         :app-name="getAppName"
+        :mode="mode[getRandomMode]"
       />
       <div id="Back-ground"><img src="/background0.png" width="100" height="100"/></div>
     </footer>
@@ -36,10 +38,8 @@ export default class DefaultLayoutComponent extends Vue {
 
   appName : string = 'Portfolio'
   protected get getAppName () : string { return this.appName }
-  protected window = {
-    width: 1500,
-    height: 1200
-  }
+
+  protected animationId :number = 0
 
   protected mode : Array<string> = ['Rainy', 'Snowy']
   protected get getRandomMode () : number {
@@ -48,13 +48,16 @@ export default class DefaultLayoutComponent extends Vue {
 
   mounted () {
     const canvas = document.getElementById('Canvas') as HTMLCanvasElement
+    const weighting : number = 250
+    canvas.width = document.body.clientWidth + weighting
+    canvas.height = window.innerHeight + weighting
+
     let cvs : AnimationLayerMain
     if (this.getRandomMode === 0) {
-      cvs = new Snowy(canvas)
-    } else {
       cvs = new Rainy(canvas)
+    } else {
+      cvs = new Snowy(canvas)
     }
-    this.cvs = cvs
     this.cvs = cvs
     document.body.addEventListener('mousemove', (e) => {
       cvs.action('move', { x: e.clientX, y: e.clientY })
@@ -73,14 +76,9 @@ export default class DefaultLayoutComponent extends Vue {
         cvs.action('mouseout')
       })
     })
-    const run = () => {
-      const weighting : number = 250
-      this.window.width = document.body.clientWidth + weighting
-      this.window.height = window.innerHeight + weighting
-      cvs.start(weighting, weighting)
-      window.requestAnimationFrame(run)
-    }
-    window.requestAnimationFrame(run)
+    cvs.setCorrection(weighting, weighting)
+    cvs.setCanvasSizeReactive()
+    cvs.start()
   }
 }
 </script>
@@ -103,6 +101,19 @@ body {
 #Footer {
   position: relative;
   margin-top: auto;
+  .main__logo {
+    position:absolute;
+    bottom: 98%;
+    right: 2rem;
+
+    @media screen and (min-width:480px)  {
+      width: 15%;
+    }
+    @media screen and (max-width:480px)  {
+      width: 30%;
+    }
+    height: auto;
+  }
   .footer {
     position: relative;
     z-index: 10;

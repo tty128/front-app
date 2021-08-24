@@ -138,14 +138,14 @@ export default abstract class AnimationLayerMain extends AnimationMain {
     }
   }
 
-  public start (correctionX?: number, correctionY?: number) : void {
+  public run () : void {
     const ctx = this.ctx
     if (ctx) {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.paint(ctx)
       this.layers.forEach((layer : Layer) => {
         if (layer.manager.objectExists()) {
-          layer.manager.action(ctx, correctionX || 0, correctionY || 0)
+          layer.manager.action(ctx, this.getCorrection().x, this.getCorrection().y)
         }
       })
     }
