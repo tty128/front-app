@@ -9,14 +9,16 @@ export default abstract class DrawObject {
   protected y : number = 0
   protected delay : number = 0
   protected color : string = Config.DRAW_OBJECT_DEFAULT_COLOR
+  protected alpha : number = 1
   protected trigger : boolean = false
   protected injectMove : ((x: number, y :number) => Point | void) = this.move
   protected useCorrection : boolean = true
 
   constructor ()
-  constructor (x : Array<number> | number | Point)
+  constructor (x : Array<number>)
+  constructor (x : number)
   constructor (x : number, y : number)
-  constructor (val1? :Array<number> | number | Point, val2? :number) {
+  constructor (val1? :number | Array<number>, val2? :number) {
     if (Array.isArray(val1)) {
       if (val1.length >= 2) {
         this.x = val1[0]
@@ -31,9 +33,6 @@ export default abstract class DrawObject {
       } else {
         this.x = this.y = val1
       }
-    } else if (typeof val1 === 'object') {
-      this.x = val1.x || 0
-      this.y = val1.y || this.x
     }
   }
 
@@ -69,6 +68,14 @@ export default abstract class DrawObject {
 
   public setTrigger (bool :boolean) :void {
     this.trigger = bool
+  }
+
+  public getAlpha () :number {
+    return this.alpha
+  }
+
+  public setAlpha (alpha :number) {
+    this.alpha = alpha
   }
 
   public getDelay () :number {

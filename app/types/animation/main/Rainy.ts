@@ -1,4 +1,3 @@
-
 /* eslint-disable no-dupe-class-members */
 import Rain from '../objects/Rain'
 import Umbrella from '../objects/Umbrella'
@@ -6,10 +5,18 @@ import Point from '../src/interface/Point'
 import AnimationLayerMain from '../src/main/AnimationLayerMain'
 
 export default class Rainy extends AnimationLayerMain {
-  private isMouseover : boolean = false
-  private mouseoverColor : string = '156, 204, 101'
-  private mousePoint : Point = { x: 0, y: 0 }
-  private counter : number = 0
+  private isMouseover: boolean = false
+  private mouseoverColor: string = '156, 204, 101'
+  private mousePoint: Point = { x: 0, y: 0 }
+  private prevMousePoint: Point = { x: 0, y: 0 }
+  private counter : {
+    mouseOver: number,
+    mouseMove: number
+  } = {
+    mouseOver: 0,
+    mouseMove: 0
+  }
+
   protected randomColor: string[] | null = [
     '210, 210, 210',
     '255, 255, 255',
@@ -24,8 +31,8 @@ export default class Rainy extends AnimationLayerMain {
   }
 
   public eventAciton (event?: string | number, params?: Point): void {
-    let x : number = 0
-    let y : number = 0
+    let x: number = 0
+    let y: number = 0
     if (params) {
       x = params.x || 0
       y = params.y || 0
@@ -33,29 +40,33 @@ export default class Rainy extends AnimationLayerMain {
 
     if (event) {
       if (event === 'click') {
-        const d = 1
-        const ax = 4
-        const ay = 4
+        const delay = 1
+        const speed = 4
         for (let i = 0; i < 20; i++) {
-          const rx = ax / 2 - this.random(ax)
-          const ry = ay / 2 - this.random(ay)
-          const arx = this.random(2)
-          const ary = this.random(2)
+          const speedX = speed / 2 - this.random(speed)
+          const speedY = speed / 2 - this.random(speed)
+          const decelerateX = this.random(2)
+          const decelerateY = this.random(2)
 
-          this.add(new Rain([x, y], { speed: 2, speedDown: 7, alpha: 20 }), 3, { delay: d * i }, (x: number, y :number) => {
-            const nx = x + rx * (99 + arx) / 100
-            const ny = y + ry * (99 + ary) / 100
+          this.add(3, new Rain([x, y], { speed: 2, speedDown: 7, alphaSubtraction: 20 }), { delay: delay * i }, (x: number, y :number) => {
+            const nx = x + speedX * (99 + decelerateX) / 100
+            const ny = y + speedY * (99 + decelerateY) / 100
             return { x: nx, y: ny }
           })
         }
       } else if (event === 'move') {
+        this.counter.mouseMove++
+        const speed : number = 20
         const absX : number = 60
         const absY : number = 60
 
         const px = x + absX / 2 - this.random(absX)
         const py = y + absY / 2 - this.random(absY)
-        this.add(new Rain([px, py], { speed: 3 }))
-        this.add(new Rain([px, py], { speed: 3 }), { delay: 10 })
+        if (Math.abs(this.prevMousePoint.x - x) + Math.abs(this.prevMousePoint.y - y) > speed && this.counter.mouseMove % 2 === 0) {
+          this.add(new Rain([px, py], { speed: 3 }))
+          this.add(new Rain([px, py], { speed: 3 }), { delay: 10 })
+          this.prevMousePoint = { x, y }
+        }
       } else if (event === 'navigation' || event === 'pagination') {
         this.mousePoint = { x, y }
         this.mouseoverColor = '156, 204, 101'
@@ -74,12 +85,11 @@ export default class Rainy extends AnimationLayerMain {
     }
   }
 
-  private testcounter : number = 0
   public init (): void {
     this.addLayer(1)
     this.addLayer(2)
     this.addLayer(3)
-    this.add(new Umbrella([95, 80], { size: 66, speed: 0.1, color: '195, 217, 171', alpha: 0.8, isRatioPosition: true }), 1)
+    this.add(1, new Umbrella([95, 80], { size: 66, speed: 0.1, isRatioPosition: true }), { color: '195, 217, 171', alpha: 0.8 })
   }
 
   public paint (_ctx : CanvasRenderingContext2D) : void {
@@ -105,17 +115,17 @@ export default class Rainy extends AnimationLayerMain {
         randY = this.random(this.getCanvas().height * 1.5) + 2
       }
       const randomSpeed = this.random(3) / 2 + 1
-      this.add(new Umbrella([randX, randY]), 2, { useCorrection: false }, (x:number, y:number) => {
+      this.add(3, new Umbrella([randX, randY]), { useCorrection: false }, (x:number, y:number) => {
         const nx = x + randomSpeed * coefficient
         const ny = y + randomSpeed * coefficient * -1
         return { x: nx, y: ny }
       })
     }
 
-    if (this.isMouseover && this.counter++ > 40) {
+    if (this.isMouseover && this.counter.mouseOver++ > 40) {
       const op = { speed: 2, lineWidth: 15, random: false }
-      this.add(new Rain([this.mousePoint.x!, this.mousePoint.y!], op), 3, { color: this.mouseoverColor })
-      this.counter = 0
+      this.add(3, new Rain([this.mousePoint.x!, this.mousePoint.y!], op), { color: this.mouseoverColor })
+      this.counter.mouseOver = 0
     }
   }
 }

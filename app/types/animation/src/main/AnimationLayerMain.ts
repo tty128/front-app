@@ -102,23 +102,39 @@ export default abstract class AnimationLayerMain extends AnimationMain {
   protected add (obj : DrawObject, option : MainAddOption) : void
   protected add (obj : DrawObject, option : MainAddOption, move : (x: number, y :number) => Point) : void
 
-  protected add (obj : DrawObject, layerId : number) : void
-  protected add (obj : DrawObject, layerId : number, move : (x: number, y :number) => Point) : void
-  protected add (obj : DrawObject, layerId : number, option : MainAddOption) :void
+  protected add (layerId : number, obj : DrawObject) : void
+  protected add (layerId : number, obj : DrawObject, move : (x: number, y :number) => Point) : void
+  protected add (layerId : number, obj : DrawObject, option : MainAddOption) :void
 
-  protected add (obj : DrawObject, layerId : number, option : MainAddOption, move : (x: number, y :number) => Point) :void
-  protected add (obj : DrawObject, value1? :((x: number, y :number) => Point) | MainAddOption | number, value2? : ((x: number, y :number) => Point) | MainAddOption, move? : (x: number, y :number) => Point) : void {
-    const id : number = typeof value1 === 'number' ? value1 : -1
-    const op : MainAddOption = typeof value1 === 'object' ? value1 : typeof value2 === 'object' ? value2 : {}
-    const mv : ((x: number, y :number) => Point) | undefined = typeof value1 === 'function' ? value1 : typeof value2 === 'function' ? value2 : move
+  protected add (layerId : number, obj : DrawObject, option : MainAddOption, move : (x: number, y :number) => Point) :void
+  protected add (value1 : DrawObject | number, value2? :((x: number, y :number) => Point) | MainAddOption | DrawObject, value3? : ((x: number, y :number) => Point) | MainAddOption, move? : (x: number, y :number) => Point) : void {
+    const obj : DrawObject | null = value1 instanceof DrawObject ? value1 : value2 instanceof DrawObject ? value2 : null
+    let op : MainAddOption = {}
+    let mv : ((x: number, y :number) => Point) | undefined = move
+
+    if (typeof value2 === 'function') {
+      mv = value2
+    } else if (value2 instanceof DrawObject) {
+      if (typeof value3 === 'function') {
+        mv = value3
+      } else {
+        op = value3 || {}
+      }
+    } else {
+      op = value2 || {}
+      if (typeof value3 === 'function') { mv = value3 }
+    }
 
     if (this.randomColor && !op.color) {
       op.color = this.randomColor[this.random(this.randomColor)]
     }
-    if (id === -1) {
-      this.focusLayer.manager.add(obj, op, mv)
-    } else {
-      this.layers[id].manager.add(obj, op, mv)
+
+    if (obj) {
+      if (typeof value1 === 'number') {
+        this.layers[value1].manager.add(obj, op, mv)
+      } else {
+        this.focusLayer.manager.add(obj, op, mv)
+      }
     }
   }
 

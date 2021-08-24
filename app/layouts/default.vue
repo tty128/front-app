@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import { Vue, Component, ProvideReactive } from 'vue-property-decorator'
+import Snowy from '../types/animation/main/Snowy'
 import Rainy from '../types/animation/main/Rainy'
 import AnimationLayerMain from '../types/animation/src/main/AnimationLayerMain'
 import AnimationMain from '../types/animation/src/main/AnimationMain'
@@ -40,30 +41,26 @@ export default class DefaultLayoutComponent extends Vue {
     height: 1200
   }
 
-  private mouseX :number = 0
-  private mouseY :number = 0
-  private counter :number = 0
-  private animationId :number = 0
+  protected mode : Array<string> = ['Rainy', 'Snowy']
+  protected get getRandomMode () : number {
+    return Math.floor(Math.random() * this.mode.length)
+  }
 
   mounted () {
     const canvas = document.getElementById('Canvas') as HTMLCanvasElement
-    const cvs = this.cvs = new Rainy(canvas)
+    let cvs : AnimationLayerMain
+    if (this.getRandomMode === 0) {
+      cvs = new Snowy(canvas)
+    } else {
+      cvs = new Rainy(canvas)
+    }
+    this.cvs = cvs
+    this.cvs = cvs
     document.body.addEventListener('mousemove', (e) => {
-      const speed : number = 10
-      const x : number = e.clientX
-      const y : number = e.clientY
-      if (Math.abs(this.mouseX - x) + Math.abs(this.mouseY - y) > speed) {
-        this.counter++
-        if ((this.counter % 2) === 0) {
-          cvs.action('move', { x, y })
-          this.counter = 0
-        }
-      }
-      this.mouseX = x
-      this.mouseY = y
+      cvs.action('move', { x: e.clientX, y: e.clientY })
     })
-    document.body.addEventListener('click', () => {
-      cvs.action('click', { x: this.mouseX, y: this.mouseY })
+    document.body.addEventListener('click', (e) => {
+      cvs.action('click', { x: e.clientX, y: e.clientY })
     })
     const mouseOnElements : NodeListOf<HTMLElement> = document.body.querySelectorAll('#Canvas-mouse-on li') as NodeListOf<HTMLElement>
     mouseOnElements.forEach((el : HTMLElement) => {
@@ -81,11 +78,7 @@ export default class DefaultLayoutComponent extends Vue {
       this.window.width = document.body.clientWidth + weighting
       this.window.height = window.innerHeight + weighting
       cvs.start(weighting, weighting)
-      try {
-        this.animationId = window.requestAnimationFrame(run)
-      } catch {
-        window.cancelAnimationFrame(this.animationId)
-      }
+      window.requestAnimationFrame(run)
     }
     window.requestAnimationFrame(run)
   }
