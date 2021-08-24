@@ -4,14 +4,13 @@ interface RainOption {
   speed? : number,
   speedDown? : number,
   lineWidth? : number,
-  alpha? : number,
+  alphaSubtraction? : number,
   random? :boolean
 }
 
 export default class Rain extends DrawObject {
   private radius : number = 0
-  private alphaMax : number = 1
-  private alpha : number = 12
+  private alphaSubtraction: number = 12
 
   private speed : number = 5
   private speedDown : number = 5
@@ -28,12 +27,12 @@ export default class Rain extends DrawObject {
       this.speed = Math.floor(Math.random() * (init.speed || this.speed)) + 1
       this.speedDown = Math.floor(Math.random() * (init.speedDown || this.speedDown)) + 2
       this.lineWidth = Math.floor((Math.random() * (init.lineWidth || this.lineWidth))) + 1
-      this.alpha = init.alpha ? Math.floor((Math.random() * (init.alpha))) + 10 : this.alpha
+      this.alphaSubtraction = init.alphaSubtraction ? Math.floor((Math.random() * (init.alphaSubtraction))) + 10 : this.alphaSubtraction
     } else {
       this.speed = init.speed || this.speed
       this.speedDown = init.speedDown || this.speedDown
       this.lineWidth = init.lineWidth || this.lineWidth
-      this.alpha = init.alpha || this.alpha
+      this.alphaSubtraction = init.alphaSubtraction || this.alphaSubtraction
     }
   }
 
@@ -42,21 +41,22 @@ export default class Rain extends DrawObject {
   public paint (ctx: CanvasRenderingContext2D, positionX :number, positionY:number): void {
     const x = positionX
     const y = positionY
+    const alpha : number = this.getAlpha()
     ctx.beginPath()
     ctx.arc(x, y, this.radius, 0, 2 * Math.PI, false)
     ctx.lineWidth = this.lineWidth
-    ctx.strokeStyle = 'rgba(' + this.color + ',' + this.alphaMax + ')'
+    ctx.strokeStyle = 'rgba(' + this.color + ',' + alpha + ')'
     ctx.stroke()
     this.radius += this.speed
     this.lineWidth = this.lineWidth - (this.lineWidth / 80)
-    this.alphaMax -= this.alpha / 1000
+    this.setAlpha(alpha - this.alphaSubtraction / 1000)
     this.speed = this.speed / ((100 + this.speedDown) / 100)
   }
 
   public move (): void {}
 
   public destroy (): boolean {
-    if (this.alpha < 0) {
+    if (this.getAlpha() < 0) {
       return true
     }
     return false

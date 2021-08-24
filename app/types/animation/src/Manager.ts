@@ -55,6 +55,7 @@ export default class Manager {
     if (move) {
       obj.setMove(move)
     }
+    obj.created()
     this.exec.push(obj)
   }
 
