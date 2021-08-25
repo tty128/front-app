@@ -1,5 +1,5 @@
 <template>
-  <div id="Page" class="cl-base--r flex--s-s flex--dc">
+  <div id="Page" class="cl-base--r flex--s-b flex--dc">
     <header id="Header">
       <OrganismsDefaultHeader
         class="cl-primary flex--c-s"
@@ -12,13 +12,13 @@
       </nav>
       <Nuxt id="Content" />
       <canvas id="Canvas" width="1500" height="1200" />
+      <AtomsLogo v-if="modeNum === 1" class="main__logo" logo="Snowy" />
     </main>
     <footer id="Footer">
-      <AtomsLogo v-if="getRandomMode === 1" class="main__logo" logo="Snowy" />
       <OrganismsDefaultFooter
         class="footer cl-base flex--s-s flex--dc"
         :app-name="getAppName"
-        :mode="mode[getRandomMode]"
+        :mode="mode[modeNum]"
       />
       <div id="Back-ground"><img src="/background0.png" width="100" height="100"/></div>
     </footer>
@@ -40,11 +40,8 @@ export default class DefaultLayoutComponent extends Vue {
   protected get getAppName () : string { return this.appName }
 
   protected animationId :number = 0
-
   protected mode : Array<string> = ['Rainy', 'Snowy']
-  protected get getRandomMode () : number {
-    return Math.floor(Math.random() * this.mode.length)
-  }
+  protected modeNum : number = 0
 
   mounted () {
     const canvas = document.getElementById('Canvas') as HTMLCanvasElement
@@ -52,8 +49,10 @@ export default class DefaultLayoutComponent extends Vue {
     canvas.width = document.body.clientWidth + weighting
     canvas.height = window.innerHeight + weighting
 
+    const randomMode : number = Math.floor(Math.random() * this.mode.length)
+    this.modeNum = randomMode
     let cvs : AnimationLayerMain
-    if (this.getRandomMode === 0) {
+    if (randomMode === 0) {
       cvs = new Rainy(canvas)
     } else {
       cvs = new Snowy(canvas)
@@ -90,6 +89,21 @@ body {
 
 #Page {
   min-height: 100vh;
+  .main__logo {
+    position: absolute;
+    bottom:-5px;
+    right: 20px;
+    z-index: 10;
+    margin-top: auto;
+    margin-left:auto;
+    @media screen and (min-width:480px)  {
+      width: 15%;
+    }
+    @media screen and (max-width:480px)  {
+      width: 30%;
+    }
+    height: auto;
+  }
 }
 #Header, #Footer {
   position: relative;
@@ -100,20 +114,6 @@ body {
 }
 #Footer {
   position: relative;
-  margin-top: auto;
-  .main__logo {
-    position:absolute;
-    bottom: 98%;
-    right: 2rem;
-
-    @media screen and (min-width:480px)  {
-      width: 15%;
-    }
-    @media screen and (max-width:480px)  {
-      width: 30%;
-    }
-    height: auto;
-  }
   .footer {
     position: relative;
     z-index: 10;
@@ -150,6 +150,9 @@ body {
   z-index: 50;
   display: flex;
   width: 100%;
+
+  padding-bottom: auto;
+  flex-grow: 1;
   // overflow: hidden;
 
   .nav {
@@ -163,6 +166,10 @@ body {
     a.--current {
       color:#8BC34A;
     }
+  }
+
+  > article {
+    padding-bottom: 10rem;
   }
 }
 #MainNav {

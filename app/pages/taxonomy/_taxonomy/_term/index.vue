@@ -5,7 +5,7 @@
     </h2>
     <div v-if="data.length > 0" class="wrapper">
       <MoleculesPagination :pages="data" button-class="cl-secoundary" current-color="cl-accent" />
-      <OrganismsCardSort class="blog-list__items flex--s"  li-class="cl-white" a-class="cl-primary" card-class="cl-white" :data="dataSlice(data,parseInt($route.query.page || 1))" />
+      <OrganismsCardSort class="blog-list__items flex--s" li-class="cl-white" a-class="cl-primary" card-class="cl-white" :data="dataSlice(data,parseInt($route.query.page || 1))" />
       <MoleculesPagination :pages="data" button-class="cl-secoundary" current-color="cl-accent" />
     </div>
     <p v-else class="flex--c">
