@@ -130,7 +130,7 @@ export default abstract class AnimationLayerMain extends AnimationMain {
     }
 
     if (obj) {
-      if (typeof value1 === 'number') {
+      if (typeof value1 === 'number' && value1 >= 0) {
         this.layers[value1].manager.add(obj, op, mv)
       } else {
         this.focusLayer.manager.add(obj, op, mv)
