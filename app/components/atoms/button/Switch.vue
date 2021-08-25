@@ -1,6 +1,11 @@
 <template>
-  <div :class="'button-switch button-switch--' + fontSize" @click="chengeSwitch">
-    <div :class="['button-switch__circle', '--' + getSwitchOnOff]" />
+  <div
+    :class="'button-switch button-switch--' + fontSize"
+    role="switch"
+    :aria-checked="getSwitch.toString()"
+    @click="chengeSwitch"
+  >
+    <div :class="['button-switch__circle', '--' + (getSwitch ? 'on' : 'off')]" />
   </div>
 </template>
 
@@ -11,8 +16,9 @@ import { Vue, Component, VModel, Prop } from 'vue-property-decorator'
 export default class ButtonSwitchComponent extends Vue {
   @Prop({ type: Number, default: 14 }) readonly fontSize! : number
   @VModel({ type: Boolean }) switch!: boolean
-  protected get getSwitchOnOff () : string {
-    return this.switch ? 'on' : 'off'
+
+  protected get getSwitch () : boolean {
+    return this.switch
   }
 
   protected chengeSwitch () : void {
@@ -31,6 +37,8 @@ export default class ButtonSwitchComponent extends Vue {
 }
 // block
 .button-switch {
+  user-select: none;
+  cursor: pointer;
   $padding: 2px;
   padding: $padding;
 
