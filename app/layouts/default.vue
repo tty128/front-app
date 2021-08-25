@@ -151,7 +151,6 @@ body {
   display: flex;
   width: 100%;
 
-  padding-bottom: auto;
   flex-grow: 1;
   // overflow: hidden;
 
